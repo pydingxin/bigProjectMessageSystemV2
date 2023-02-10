@@ -1,5 +1,51 @@
 import {reactive} from 'vue'    
 
+let column2022 = [
+    {"title":"序号","key":"col0",},
+    {"title":"项目名称","key":"col1",},
+    {"title":"建设规模和建设内容","key":"col2"},
+    {"title":"2022年计划建设内容","key":"col3", },
+    {"title":"总投资（万元）","key":"col4"},
+    {"title":"2022年计划投资（万元）","key":"col5"},
+    {"title":"项目建成后效益","key":"col6"},
+    {"title":"2022年节点目标（万元）","key":"col7"},
+
+    {"title": "形象进度","key":"colk0",
+        "children":[
+            {"title":"是否开工","key":"col8"},
+            {"title":"本年度累计完成投资额度（不含2021年）","key":"col9"},
+            {"title":"投资完成率","key":"col10"},
+            {"title":"实物工程量","key":"col11"},
+            {"title":"本年度完成投资明细（万元）","key":"col12"},
+            {"title":"是否纳统","key":"col13"}]
+    },
+
+    {"title":"手续办理情况","key":"colk1",
+        "children":[
+            {"title":"立项","key":"col14"},
+            {"title":"环评","key":"col15"},
+            {"title":"土地批文","key":"col16"},
+            {"title":"土地出让合同或划拨决定书或土地证号","key":"col17"},
+            {"title":"用地规划许可证","key":"col18"},
+            {"title":"规划设计方案审查批文","key":"col19"},
+            {"title":"工程规划许可证","key":"col20"},
+            {"title":"水土保持方案批复","key":"col21"},
+            {"title":"节能","key":"col22"},
+            {"title":"施工许可证（含消防设计审查）","key":"col23"}]
+    },
+
+    {"title":"存在问题、解决方案及完成时限","key":"colk2",
+        "children":[
+            {"title":"具体问题","key":"col24"},
+            {"title":"解决措施","key":"col25"},
+            {"title":"办理部门","key":"col26"},
+            {"title":"完成时限","key":"col27"}]
+    },
+
+    {"title":"责任单位","key":"col28"},
+    {"title":"责任领导","key":"col29"}
+];
+
 //后端传来的总的项目数据
 let allProjectMsg=[{
     "key":"row0",
