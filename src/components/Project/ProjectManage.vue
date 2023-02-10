@@ -1,22 +1,24 @@
 <template>
+
     <n-space>
         <!-- 输入空时查找全部 -->
         <n-input clearable 
             :style="{'width':'20rem'}"
             v-model:value="inputProjectName" 
             type="text" 
-            placeholder="输入项目名，添加项目时必须输入全名" />
-
-        <n-button type="primary" @click="addProject">  
-            <n-icon size="15" ><add /></n-icon>
-            添加项目
-        </n-button>
+            placeholder="输入关键词查找" />
 
         <n-button type="warning" @click="searchProject">
             <n-icon size="15" ><search /></n-icon>
             查找项目
         </n-button>
+
+        <n-button type="primary" @click="addProject">  
+            <n-icon size="15" ><add /></n-icon>
+            添加项目
+        </n-button>
     </n-space>
+
     <div style="height:0.4rem"></div>
       <n-data-table
         :columns="columns"
@@ -24,17 +26,22 @@
         :pagination="pagination"
         :bordered="true"
     />
+    <!-- 等待编辑新建项目的事件showProjectMsgFormModal触发出现 -->
+    <ProjectMsgFormModal  /> 
 </template>
 
 <script>
 import {storeProject} from '@/store/storeProject.js'
 import naiveApi from '@/js/naiveUiApi.js'
 
+import eventBus from '@/js/mittEventBus.js'
 import { h} from "vue";
 import { NDataTable,NButton,NInput,NSpace,NIcon, } from 'naive-ui';
 import { Add ,Search} from "@vicons/ionicons5";
 
 import ProjectDeleteButton from "./ProjectDeleteButton.vue";
+import ProjectEditButton from "./ProjectEditButton.vue";
+import ProjectMsgFormModal from "./ProjectMsgFormModal.vue";
 
 
 export default{
@@ -42,6 +49,7 @@ export default{
         NDataTable,NButton,ProjectDeleteButton,NInput,NSpace,
         NIcon,
         Add,Search,
+        ProjectMsgFormModal,
     },
     methods:{
         refreshProjectMsg(){
@@ -50,13 +58,9 @@ export default{
             // console.log("in ProjectManage.vue refreshProjectMsg(), got ",this.tableData)
         },
         addProject(){
-            //click add button
-            // 由专门的store执行
-            if(''===this.inputProjectName){
-                naiveApi.notifyFail('请输入项目名')
-                return;
-            }
-            console.log("add project",this.inputProjectName)
+            console.log("add project")
+            
+            eventBus.emit("showProjectMsgFormModal",{type: "add"})
         },
         searchProject(){
             //click search button
@@ -80,6 +84,8 @@ export default{
     },
     data(){
         return{
+    
+
             columns:[
                 {
                     title: "项目序号",
@@ -91,7 +97,22 @@ export default{
                 },
                 {
                     title: "",
-                    key: "actions",
+                    key: "edit",
+                    render(row) {
+                        return h(
+                            ProjectEditButton,
+                            {
+                                projectKeyProxy: row.key,
+                                projectNameProxy: row.name,
+                            },
+                            { default: () => "编辑项目" }
+                        );
+                    }
+                    
+                },
+                {
+                    title: "",
+                    key: "delete",
                     render(row) {
                         return h(
                             ProjectDeleteButton,

@@ -1,7 +1,7 @@
 import {reactive} from 'vue'    
 
 //后端传来的总的项目数据
-let allTableMsg=[{
+let allProjectMsg=[{
     "key":"row0",
     "idx":'1',
     "col0":"3",
@@ -95,9 +95,13 @@ let allTableMsg=[{
 ];
 
 function projectManage_allProjectMsg(){
-    return allTableMsg.map(one=>({idx:one.idx, key:one.key, name:one.col1}));
+    return allProjectMsg.map(one=>({idx:one.idx, key:one.key, name:one.col1}));
+}
+function getProjectMsgByKey(key){
+    return allProjectMsg.find(one=>one.key===key)
 }
 export const storeProject = reactive({
     projectManage_allProjectMsg,
+    getProjectMsgByKey,
 })
   

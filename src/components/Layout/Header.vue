@@ -1,5 +1,5 @@
 <template>
-    <div id="container" style="display:flex;align-items: center;justify-content:space-between;">
+    <div id="container" style="min-width: 15rem;display:flex;align-items: center;justify-content:space-between;">
           <h3 style="color:whitesmoke;margin:0.2rem">
               &nbsp&nbsp欢迎使用平邑县重点项目生命周期管理系统
           </h3>

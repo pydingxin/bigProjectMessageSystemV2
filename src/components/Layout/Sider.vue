@@ -42,12 +42,12 @@
                  icon: renderIcon(SettingsOutline),
                  children: [
                      {
-                         label: "项目增减",
+                         label: "项目管理",
                          icon: renderIcon(AppsOutline),
                          key: "ProjectManage",
                      },
                      {
-                         label: "用户账号管理",
+                         label: "账号管理",
                          icon: renderIcon(PersonAddOutline),
                          key: "AccountManage",
                      },
