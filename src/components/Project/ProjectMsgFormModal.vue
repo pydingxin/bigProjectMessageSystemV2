@@ -96,6 +96,15 @@
       <n-input class="minwidth5" style="height:10rem" v-model:value="form.yearnode" type="textarea" placeholder="今年节点目标" />
       </div>
   </div>
+  
+  <template #action>
+    <n-popconfirm v-model:show="showConfirmBtn" :show-icon="false" positive-text="确定" negative-text="取消" >
+      <template #trigger> <n-button> 保存编辑 </n-button> </template>
+      确定保存？
+      <template #action> <n-button size="small" @click="saveForm"> 确定！</n-button> </template>
+    </n-popconfirm>
+  </template>
+
   </n-modal>
 </template>
 
@@ -105,12 +114,12 @@ import eventBus from '@/js/mittEventBus.js'
 import {storeProject} from "@/store/storeProject.js"
 import {storeAccount} from "@/store/storeAccount.js"
 import {
-    NModal,NDivider,NInput,NTag,NSpace,NCascader,NInputNumber,
+    NModal,NDivider,NInput,NTag,NSpace,NCascader,NInputNumber,NButton,NPopconfirm,
 } from 'naive-ui'
 
 export default{
     components:{
-      NModal,NDivider,NInput,NTag,NSpace,NCascader,NInputNumber,
+      NModal,NDivider,NInput,NTag,NSpace,NCascader,NInputNumber,NButton,NPopconfirm,
     },
     mounted(){
       let that=this;
@@ -125,13 +134,17 @@ export default{
       
     },
     methods:{
-      addProject:function(){
+      saveForm(){
+        this.showConfirmBtn=false;
+        console.log("save form")
+      },
+      addProject(){
         console.log("addProject",this.eventMsg);
         this.modalTitle= "创建项目"
         this.form={}; //清空上次编辑时留存的数据
         this.options= [];
       },
-      editProject:function(){
+      editProject(){
         console.log("editProject",this.eventMsg);
         this.modalTitle= `编辑项目`
         this.form= storeProject.getProjectMsgByKey(this.eventMsg.projectKey)
@@ -144,7 +157,7 @@ export default{
     },
     data(){
         return{
-
+            showConfirmBtn:false,
             showModal:false,
             eventMsg:{},
             projectMsg:{},
