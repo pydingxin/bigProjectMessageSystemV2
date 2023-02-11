@@ -12,18 +12,11 @@ function getAllOrgAccountMsg(){
 function getOrgMsgByKey(key){
     return msg.filter(m=>m.key===key)[0];
 }
-function getAccountKeyNameMap(){
-    let ret={};
-    for(let m of msg){
-        ret[m.key]=m.name;
-    }
-    return ret;
-}
+
 export const storeAccount = reactive({
     getThisOrgAccountMsg,
     getAllOrgAccountMsg,
     getOrgMsgByKey,
 
-    getAccountKeyNameMap,
 })
   
