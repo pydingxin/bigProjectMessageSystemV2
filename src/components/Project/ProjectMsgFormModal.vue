@@ -1,10 +1,10 @@
 <template>
- <n-modal style="min-width:50rem;" v-model:show="showModal" preset="dialog" title="Dialog">
+ <n-modal style="min-width:80rem;min-height: 40rem;" v-model:show="showModal" preset="dialog" title="Dialog">
     <template #header>
-      <div class="txt" >{{modalTitle}}</div>
+      <div style="color:gray" >{{modalTitle}}</div>
     </template>
-    <div>
-      <n-divider class="txt" title-placement="left">标题</n-divider>
+    <div class="form">
+    <div id="left" >
       <div class="horizon">
         <span class="width2" >序号</span>
         <n-input class="width5" v-model:value="form.idx" type="text" placeholder="序号" /> 
@@ -14,17 +14,22 @@
       </div>
 
       <n-divider class="txt" title-placement="left">标签</n-divider>
-      <div class="horizon">
-        <span class="width4" >建设性质</span>
-        <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设性质" /> &nbsp &nbsp &nbsp
-        <span class="width0">&nbsp</span>
-        <span class="width4" >建设级别</span>
-        <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设级别" /> &nbsp &nbsp &nbsp
-        <span class="width0">&nbsp</span>
-        <span class="width4" >建设领域</span>
-        <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设领域" />
+      <div>
+        <div class="horizon">
+          <span class="width4" >建设性质</span>
+          <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设性质" /> &nbsp &nbsp &nbsp
+          <span class="width0">&nbsp</span>
+          <span class="width4" >建设级别</span>
+          <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设级别" /> &nbsp &nbsp &nbsp
+          <span class="width0">&nbsp</span>
+    
+        </div>
+        <div class="horizon">
+            <span class="width4" >建设领域</span>
+            <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设领域" />
+        </div>
       </div>
-      
+
       <n-divider class="txt" title-placement="left">干系人</n-divider>
       <div class="horizon">
         <span class="width5" >责任县领导</span>
@@ -33,34 +38,65 @@
         <span class="minwidth5" >联系人和联系方式</span>
         <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="联系人和联系方式" />
       </div>
+      <div class="horizon">
         <span class="width4" >责任单位</span>
-        <n-cascader
-          v-model:value="value"
-          multiple
-          clearable
-          placeholder="责任单位"
-          :max-tag-count="responsiveMaxTagCount ? 'responsive' : undefined"
-          :expand-trigger="hoverTrigger ? 'hover' : 'click'"
-          :options="options"
-          :cascade="cascade"
-          :check-strategy="checkStrategyIsChild ? 'child' : 'all'"
-          :show-path="showPath"
-          :filterable="filterable"
-          :clear-filter-after-select="clearFilterAfterSelect"
-          @update:value="handleUpdateValue"
-        />
+        <n-cascader v-model:value="form.org" multiple clearable placeholder="责任单位" :options="options" @update:value="handleUpdateValue" />
+    </div>
+
 
       <n-divider class="txt" title-placement="left">整体计划</n-divider>
-      <n-divider class="txt" title-placement="left">资金回顾</n-divider>
-      <n-divider class="txt" title-placement="left">今年计划</n-divider>
-      <n-input
-        v-model:value="yearnode"
-        type="textarea"
-        placeholder="今年节点计划"
-      />
-      
-
+      <span class="width7" style="color:gray" >主要内容和规模</span>
+      <n-input class="minwidth5" v-model:value="value" type="textarea" placeholder="主要内容和规模" />
+      <div>
+        <div class="horizon">
+          <span class="width4" >建设单位</span>
+          <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设单位" /> &nbsp &nbsp &nbsp
+          <span class="width0">&nbsp</span>
+          <span class="width4" >建设地点</span>
+          <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="建设地点" />
+        </div>
+        <div class="horizon">
+          <span class="width4" >开工时间</span>
+          <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="开工时间" /> &nbsp &nbsp &nbsp
+          <span class="width0">&nbsp</span>
+          <span class="width4" >竣工时间</span>
+          <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="竣工时间" />
+        </div>
+      </div>
     </div>
+    
+    <div class="width1" style="min-height:30rem;"></div>
+    
+    <div class="width1" style="min-height:40rem;border-left: 1px solid green;"></div>
+    
+    <div id="right">
+      <n-divider class="txt" title-placement="left">资金回顾</n-divider>
+      <div class="horizon">
+        <span class="width4" >资金来源</span>
+        <n-input class="minwidth5" v-model:value="form.idx" type="text" placeholder="资金来源" /> &nbsp &nbsp &nbsp
+      </div>
+      <div class="horizon">
+        <span class="width7" >总计划投资[万元]</span>
+        <n-input-number  min=0 clearable v-model:value="form.allcost" :show-button="false" placeholder="总计划投资" :precision="2" />
+        </div>
+      <div class="horizon">
+        <span class="width7" >往年已投资[万元]</span>
+        <n-input-number min=0  clearable v-model:value="form.hadcost" :show-button="false" placeholder="往年已投资" :precision="2" />
+      </div>
+
+      <n-divider class="txt" title-placement="left">今年计划</n-divider>
+      <div class="horizon">
+        <span class="width8" >今年计划投资[万元]</span>
+        <n-input-number min=0 clearable v-model:value="form.hadcost" :show-button="false" placeholder="今年计划投资" :precision="2" />
+      </div>
+      <span class="width7" style="color:gray" >今年建设计划</span>
+      <n-input class="minwidth5" v-model:value="value" type="textarea" placeholder="今年建设计划" />
+
+      <span class="width7" style="color:gray" >今年节点目标</span>
+      <n-input class="minwidth5" style="height:10rem" v-model:value="value" type="textarea" placeholder="今年节点目标" />
+      </div>
+  </div>
+    
   </n-modal>
 </template>
 
@@ -69,12 +105,12 @@
 import eventBus from '@/js/mittEventBus.js'
 import {storeProject} from "@/store/storeProject.js"
 import {
-    NModal,NDivider,NInput,NTag,NSpace
+    NModal,NDivider,NInput,NTag,NSpace,NCascader,NInputNumber,
 } from 'naive-ui'
 
 export default{
     components:{
-      NModal,NDivider,NInput,NTag,NSpace
+      NModal,NDivider,NInput,NTag,NSpace,NCascader,NInputNumber,
     },
     mounted(){
       let that=this;
@@ -99,6 +135,9 @@ export default{
         this.projectMsg= storeProject.getProjectMsgByKey(this.eventMsg.projectKey)
         this.modalTitle= `编辑项目`
       },
+      handleUpdateValue(value, options) {
+        console.log(value, options);
+      }
     },
     data(){
         return{
@@ -107,6 +146,10 @@ export default{
             projectMsg:{},
 
             modalTitle:"",
+            options:[
+              {value: "value1", label: "label1",},
+              {value: "value2", label: "label2",},
+            ],
             form:{
               //标题
               idx:"",   //序号
@@ -158,19 +201,27 @@ export default{
 </script>
 
 <style scoped>
-.txt{
-  color:green
-}
+
 .horizon{
   display: flex;
   flex-direction: row;
   justify-content:flex-start;
   align-items: center;
-  min-height: 4rem;
+  padding-bottom: 0.2rem;
+  color:gray;
+}
+.form{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 .width0{
   max-width: 0.5rem;
   min-width: 0.5rem;
+}
+.width1{
+  max-width: 1rem;
+  min-width: 1rem;
 }
 .width2{
   max-width: 2rem;
@@ -196,10 +247,15 @@ export default{
   max-width: 7rem;
   min-width: 7rem;
 }
+.width8{
+  max-width: 8rem;
+  min-width: 8rem;
+}
 .minwidth5{
   min-width: 5rem;
 }
 :deep(.n-divider){
-  margin:0;
+  color:green;
 }
+
 </style>
