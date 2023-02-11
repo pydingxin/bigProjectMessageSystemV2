@@ -165,6 +165,8 @@ export default{
             modalTitle:"",
             //从store获取账号信息,给options，显示单位下拉菜单
             options:[],
+
+            //项目静态信息表单，由管理员编辑
             form:{
               key:-1, //该key是库表id，并不存在
               //标题
@@ -197,19 +199,6 @@ export default{
               yearcost:0,   //今年计划投资
               yearplan:"",    //今年建设计划
               yearnode:"",    //今年节点目标
-
-              // 上述是发改局填报，后两部分是责任单位填报
-              //手续
-              lixiang:"",   //立项
-              yongdi:"",    //用地
-              guihua:"",    //规划
-              huanping:"",  //环评
-              nengping:"",  //能评
-              xukezheng:"", //施工许可证
-
-              //今年进展
-              xingxiang:"",   //形象进度
-              yearcosted:0, //今年投资额
             },
         }
     }

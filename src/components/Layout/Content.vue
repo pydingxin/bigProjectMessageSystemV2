@@ -8,14 +8,15 @@
 import eventBus from '@/js/mittEventBus.js'
 import ProjectManage from "@/components/Project/ProjectManage.vue";
 import AccountManage from "@/components/Account/AccountManage.vue";
+import MyProject from "@/components/MyProject/MyProject.vue";
 export default{
     components:{
-        ProjectManage,AccountManage,
+        ProjectManage,AccountManage,MyProject,
 
     },
     data(){
         return{
-            selectedContentComponent:"ProjectManage",
+            selectedContentComponent:"MyProject",
         }
     },
     mounted(){

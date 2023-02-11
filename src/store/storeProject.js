@@ -1,5 +1,5 @@
 import {reactive} from 'vue'    
-
+/*
 let projectColumn = [
         {"title":"序号","key":"index"},
         {"title":"项目名称","key":"name"},
@@ -29,10 +29,40 @@ let projectColumn = [
         {"title":"形象进度","key":"xingxiang"},
         {"title":"今年投资额","key":"yearcosted"},
 ];
+*/
 
+// 项目动态信息，责任单位编辑
+// 这个key就是对应的项目的id，根据key获取其基础信息，基础信息不能保存在这里
+let allProjectDynamicMsg = [
+    //有三个状态，uninit,started,done
+    {
+        "key":0,
+        "lixiang":{status:"started",msg:"项目1正在研究立项"},
+        "yongdi":{status:"done",msg:"用地完成"},
+        "guihua":{status:"done",msg:"规划完成"},
+        "huanping":{status:"done",msg:"环评完成"},
+        "nengping":{status:"done",msg:"能评完成"},
+        "xukezheng":{status:"done",msg:"许可证完成"},
+        
+        "xingxiang":"形象进度很好",
+        "yearcosted":500,
+    },
+    {
+        'key':1,
+        "lixiang":{status:"done",msg:"立项完成"},
+        "yongdi":{status:"uninit",msg:"项目2没有地了！"},
+        "guihua":{status:"done",msg:"规划完成"},
+        "huanping":{status:"done",msg:"环评完成"},
+        "nengping":{status:"done",msg:"能评完成"},
+        "xukezheng":{status:"done",msg:"许可证完成"},
+        
+        "xingxiang":"形象进度呵呵了",
+        "yearcosted":500,
+    },
+];
 
-//后端传来的总的项目数据
-let allProjectMsg=[
+//后端传来的总的项目静态信息
+let allProjectStaticMsg=[
     {
         "key":0,
         "index":"1",
@@ -60,15 +90,6 @@ let allProjectMsg=[
         "yearplan":"今年计划完成",
         "yearnode":"节点紧迫",
 
-        "lixiang":{status:"done",msg:"立项完成"},
-        "yongdi":{status:"done",msg:"用地完成"},
-        "guihua":{status:"done",msg:"规划完成"},
-        "huanping":{status:"done",msg:"环评完成"},
-        "nengping":{status:"done",msg:"能评完成"},
-        "xukezheng":{status:"done",msg:"许可证完成"},
-        
-        "xingxiang":"形象进度很好",
-        "yearcosted":500,
     },
     
     {
@@ -98,26 +119,17 @@ let allProjectMsg=[
         "yearplan":"今年计划完成",
         "yearnode":"节点紧迫",
 
-        "lixiang":{status:"done",msg:"立项完成"},
-        "yongdi":{status:"done",msg:"用地完成"},
-        "guihua":{status:"done",msg:"规划完成"},
-        "huanping":{status:"done",msg:"环评完成"},
-        "nengping":{status:"done",msg:"能评完成"},
-        "xukezheng":{status:"done",msg:"许可证完成"},
-        
-        "xingxiang":"形象进度很好",
-        "yearcosted":500,
     },
 ];
 
-function projectManage_allProjectMsg(){
-    return allProjectMsg.map(one=>({idx:one.index, key:one.key, name:one.name}));
+function getAllProjectStaticMsg(){
+    return allProjectStaticMsg.map(one=>({idx:one.index, key:one.key, name:one.name}));
 }
 function getProjectMsgByKey(key){
-    return allProjectMsg.find(one=>one.key===key)
+    return allProjectStaticMsg.find(one=>one.key===key)
 }
 export const storeProject = reactive({
-    projectManage_allProjectMsg,
+    getAllProjectStaticMsg,
     getProjectMsgByKey,
 })
   

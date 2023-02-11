@@ -16,8 +16,8 @@
  
  import { NMenu,NIcon } from "naive-ui";
  import {
-     DocumentAttachOutline,CreateOutline,AppsOutline,
-   SettingsOutline,PersonAddOutline,ShieldCheckmarkOutline,
+     CreateOutline,AppsOutline,
+   SettingsOutline,PersonAddOutline,
  } from "@vicons/ionicons5";
  
  import eventBus from '@/js/mittEventBus.js'
@@ -31,9 +31,9 @@
          defaultExpandedKeys: [],
          menuOptions:[
              {
-                 label: "表格填报",
+                 label: "我的项目",
                  icon: renderIcon(CreateOutline),
-                 key: "MyTable" //这里的key就是<Content>中动态组件的名字
+                 key: "MyProject" //这里的key就是<Content>中动态组件的名字
              },
              {
                  show:true,

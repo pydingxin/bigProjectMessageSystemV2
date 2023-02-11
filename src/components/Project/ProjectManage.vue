@@ -54,7 +54,7 @@ export default{
     methods:{
         refreshProjectMsg(){
             //每行的key都是项目key，可以用这个key删除项目
-            this.tableData = storeProject.projectManage_allProjectMsg()
+            this.tableData = storeProject.getAllProjectStaticMsg()
             // console.log("in ProjectManage.vue refreshProjectMsg(), got ",this.tableData)
         },
         addProject(){
