@@ -5,12 +5,7 @@
       </n-layout-header>
 
       <n-layout has-sider>
-        <n-layout-sider   
-          :collapsed-width="22"
-          :collapsed-icon-size="22"
-          collapse-mode="width"
-          :show-collapsed-content="false"
-          show-trigger="arrow-circle">
+        <n-layout-sider >
           <Sider />
         </n-layout-sider>
 

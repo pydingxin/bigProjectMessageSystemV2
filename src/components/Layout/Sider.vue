@@ -1,7 +1,5 @@
 <template>
     <n-menu
-         :collapsed-width="22"
-         :collapsed-icon-size="22"
          @update:value="handleMenuClick"
          :options="menuOptions"
          :default-expanded-keys="defaultExpandedKeys"
