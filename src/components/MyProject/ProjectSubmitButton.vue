@@ -1,5 +1,5 @@
 <template>
-    <n-button @click="clickEditBtn">报送信息</n-button>
+    <n-button @click="clickEditBtn">进度管理</n-button>
 </template>
 
 <script>

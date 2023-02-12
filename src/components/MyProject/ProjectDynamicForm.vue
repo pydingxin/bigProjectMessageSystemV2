@@ -1,9 +1,18 @@
 <template>
     <!-- 返回按钮 -->
-    <n-button type="tertiary" dashed circle @click="closeProjectDynamicForm">
+    <n-button type="tertiary" dashed  @click="closeProjectDynamicForm">
       <template #icon>
         <n-icon><arrow-back /></n-icon>
       </template>
+      返回
+    </n-button>
+    &nbsp
+    <!-- 保存按钮 -->
+    <n-button type="tertiary" dashed  @click="saveForm">
+      <template #icon>
+        <n-icon><cloud-upload /></n-icon>
+      </template>
+      保存编辑
     </n-button>
 
     <!-- 标题 -->
@@ -98,12 +107,11 @@
             <n-input v-model:value="form.xingxiang" :autosize="{minRows:7,maxRows:7}" type="textarea" />
         </n-card>
     </div>
-    {{ form }}
 </template>
 
 <script>
 import eventBus from '@/js/mittEventBus.js'
-import { ArrowBack,Checkbox} from "@vicons/ionicons5";
+import { ArrowBack,CloudUpload,Checkbox} from "@vicons/ionicons5";
 
 import { 
     NButton,NIcon,
@@ -127,7 +135,7 @@ import {storeProject} from '@/store/storeProject.js';
 */
 export default{
     components:{
-        ArrowBack,Checkbox,
+        ArrowBack,Checkbox,CloudUpload,
         NButton,NIcon,NCard,
         NH1,NH6,NText,NSelect,NSpace,NInput,NInputNumber,
     },

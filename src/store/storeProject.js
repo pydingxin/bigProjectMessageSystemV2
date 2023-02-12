@@ -16,7 +16,6 @@ let allProjectDynamicMsg = [
         
         "yearcosted":500,
         "xingxiang":"形象进度很好",
-        'images':[],
     },
     {
         'key':1,
@@ -29,7 +28,6 @@ let allProjectDynamicMsg = [
         
         "yearcosted":500,
         "xingxiang":"形象进度呵呵了",
-        'images':[],
     },
 ];
 
