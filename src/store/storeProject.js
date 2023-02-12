@@ -4,18 +4,19 @@ import {reactive} from 'vue'
 // 项目动态信息，后端不会一次传过来，支持单条请求
 // 这个key就是对应的项目的id，根据key获取其静态信息
 let allProjectDynamicMsg = [
-    //有三个状态，uninit,started,done
+    //有三个状态，uninit,inited,done
     {
         "key":0,
-        "lixiang":{status:"started",msg:"项目1正在研究立项"},
+        "lixiang":{status:"inited",msg:"项目1正在研究立项"},
         "yongdi":{status:"done",msg:"用地完成"},
         "guihua":{status:"done",msg:"规划完成"},
         "huanping":{status:"done",msg:"环评完成"},
         "nengping":{status:"done",msg:"能评完成"},
         "xukezheng":{status:"done",msg:"许可证完成"},
         
-        "xingxiang":"形象进度很好",
         "yearcosted":500,
+        "xingxiang":"形象进度很好",
+        'images':[],
     },
     {
         'key':1,
@@ -26,8 +27,9 @@ let allProjectDynamicMsg = [
         "nengping":{status:"done",msg:"能评完成"},
         "xukezheng":{status:"done",msg:"许可证完成"},
         
-        "xingxiang":"形象进度呵呵了",
         "yearcosted":500,
+        "xingxiang":"形象进度呵呵了",
+        'images':[],
     },
 ];
 
@@ -36,7 +38,7 @@ let allProjectStaticMsg=[
     {
         "key":0,
         "index":"1",
-        "name":"项目责任单位财政局",
+        "name":"城建项目【责任单位财政局】",
 
         "xingzhi":"新建",
         "jibie":"省重大",
