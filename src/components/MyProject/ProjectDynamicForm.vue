@@ -6,116 +6,122 @@
       </template>
       返回
     </n-button>
-    &nbsp
-    <!-- 保存按钮 -->
-    <n-button type="tertiary" dashed  @click="saveForm">
-      <template #icon>
-        <n-icon><cloud-upload /></n-icon>
-      </template>
-      保存编辑
-    </n-button>
 
     <!-- 标题 -->
-    <n-h1 prefix="bar">
-      <n-text type="primary">
+    <n-h1 prefix="bar"><n-text type="primary">
         {{ staticMsg.name }}
-      </n-text>
-    </n-h1>
+    </n-text></n-h1>
+
+    <n-h3><n-text type="warning">
+        每次提交都会存档，形成时间线，请认真填写
+    </n-text></n-h3> 
 
     <!-- 卡片 -->
     <div id="cardContainer">
         <n-card hoverable embedded title="立项" class="card">
             <n-space vertical>
                 <n-space>
-                    <n-select style="min-width:8rem" v-model:value="form.lixiang.status" :options="selectOptions" />
+                    <n-button type="tertiary" dashed  @click="saveItem('lixiang')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                    <n-select style="min-width:7rem" v-model:value="form.lixiang.status" :options="selectOptions" />
                     <n-icon v-show="form.lixiang.status==='done'" size="30" color="green">
                         <checkbox />
                     </n-icon>
                 </n-space>
-                <n-input v-model:value="form.lixiang.msg" :autosize="{minRows:5,maxRows:5}" type="textarea" />
+                <n-input v-model:value="form.lixiang.msg" :autosize="{minRows:8,maxRows:8}" type="textarea" />
             </n-space>
         </n-card>
         
         <n-card hoverable embedded title="用地" class="card">
             <n-space vertical>
                 <n-space>
-                    <n-select style="min-width:8rem" v-model:value="form.yongdi.status" :options="selectOptions" />
+                    <n-button type="tertiary" dashed  @click="saveItem('yongdi')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                    <n-select style="min-width:7rem" v-model:value="form.yongdi.status" :options="selectOptions" />
                     <n-icon v-show="form.yongdi.status==='done'" size="30" color="green">
                         <checkbox />
                     </n-icon>
                 </n-space>
-                <n-input v-model:value="form.yongdi.msg" :autosize="{minRows:5,maxRows:5}" type="textarea" />
+                <n-input v-model:value="form.yongdi.msg" :autosize="{minRows:8,maxRows:8}" type="textarea" />
             </n-space>
         </n-card>
         
         <n-card hoverable embedded title="规划" class="card">
             <n-space vertical>
                 <n-space>
-                    <n-select style="min-width:8rem" v-model:value="form.guihua.status" :options="selectOptions" />
+                    <n-button type="tertiary" dashed  @click="saveItem('guihua')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                    <n-select style="min-width:7rem" v-model:value="form.guihua.status" :options="selectOptions" />
                     <n-icon v-show="form.guihua.status==='done'" size="30" color="green">
                         <checkbox />
                     </n-icon>
                 </n-space>
-                <n-input v-model:value="form.guihua.msg" :autosize="{minRows:5,maxRows:5}" type="textarea" />
+                <n-input v-model:value="form.guihua.msg" :autosize="{minRows:8,maxRows:8}" type="textarea" />
             </n-space>
         </n-card>
         
         <n-card hoverable embedded title="环评" class="card">
             <n-space vertical>
                 <n-space>
-                    <n-select style="min-width:8rem" v-model:value="form.huanping.status" :options="selectOptions" />
+                    <n-button type="tertiary" dashed  @click="saveItem('huanping')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                    <n-select style="min-width:7rem" v-model:value="form.huanping.status" :options="selectOptions" />
                     <n-icon v-show="form.huanping.status==='done'" size="30" color="green">
                         <checkbox />
                     </n-icon>
                 </n-space>
-                <n-input v-model:value="form.huanping.msg" :autosize="{minRows:5,maxRows:5}" type="textarea" />
+                <n-input v-model:value="form.huanping.msg" :autosize="{minRows:8,maxRows:8}" type="textarea" />
             </n-space>
         </n-card>
         
         <n-card hoverable embedded title="能评" class="card">
             <n-space vertical>
                 <n-space>
-                    <n-select style="min-width:8rem" v-model:value="form.nengping.status" :options="selectOptions" />
+                    <n-button type="tertiary" dashed  @click="saveItem('nengping')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                    <n-select style="min-width:7rem" v-model:value="form.nengping.status" :options="selectOptions" />
                     <n-icon v-show="form.nengping.status==='done'" size="30" color="green">
                         <checkbox />
                     </n-icon>
                 </n-space>
-                <n-input v-model:value="form.nengping.msg" :autosize="{minRows:5,maxRows:5}" type="textarea" />
+                <n-input v-model:value="form.nengping.msg" :autosize="{minRows:8,maxRows:8}" type="textarea" />
             </n-space>
         </n-card>
 
         <n-card hoverable embedded title="施工许可证" class="card">
             <n-space vertical>
                 <n-space>
-                    <n-select style="min-width:8rem" v-model:value="form.xukezheng.status" :options="selectOptions" />
+                    <n-button type="tertiary" dashed  @click="saveItem('xukezheng')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                    <n-select style="min-width:7rem" v-model:value="form.xukezheng.status" :options="selectOptions" />
                     <n-icon v-show="form.xukezheng.status==='done'" size="30" color="green">
                         <checkbox />
                     </n-icon>
                 </n-space>
-                <n-input v-model:value="form.xukezheng.msg" :autosize="{minRows:5,maxRows:5}" type="textarea" />
+                <n-input v-model:value="form.xukezheng.msg" :autosize="{minRows:8,maxRows:8}" type="textarea" />
             </n-space>
         </n-card>
         
         <n-card hoverable embedded title="本年度已投资[万元]" class="card">
-            <n-input-number  min=0 clearable v-model:value="form.yearcosted" :show-button="false" placeholder="本年度已投资[万元]"  />
-            <n-h6><n-text type="info">总计划投资[万元]：{{ staticMsg.allcost }}</n-text></n-h6>
-            <n-h6><n-text type="success">往年已投资[万元]：{{ staticMsg.hadcost }}</n-text></n-h6>
-            <n-h6><n-text type="warning">今年计划投资[万元]：{{ staticMsg.yearcost }}</n-text></n-h6>
+            <n-space>
+                <n-button type="tertiary" dashed  @click="saveItem('yearcosted')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+                <n-input-number style="width: 9rem;" min=0 clearable v-model:value="form.yearcosted" :show-button="false" placeholder="本年度已投资"  />
+            </n-space><br />
+            <n-h6><n-text type="success">总计划投资[万元]：{{ staticMsg.allcost }}</n-text></n-h6> <br />
+            <n-h6><n-text type="success">往年已投资[万元]：{{ staticMsg.hadcost }}</n-text></n-h6> <br />
+            <n-h6><n-text type="success">今年计划投资[万元]：{{ staticMsg.yearcost }}</n-text></n-h6> <br />
         </n-card>
         
         <n-card hoverable embedded title="形象进度" class="card">
-            <n-input v-model:value="form.xingxiang" :autosize="{minRows:7,maxRows:7}" type="textarea" />
+            <n-button type="tertiary" dashed  @click="saveItem('xingxiang')"><template #icon> <n-icon><cloud-upload /></n-icon> </template>提交</n-button>
+            <div style="height:0.6rem"></div>
+            <n-input v-model:value="form.xingxiang" :autosize="{minRows:8,maxRows:8}" type="textarea" />
         </n-card>
     </div>
 </template>
 
 <script>
 import eventBus from '@/js/mittEventBus.js'
+import naiveApi from '@/js/naiveUiApi.js'
 import { ArrowBack,CloudUpload,Checkbox} from "@vicons/ionicons5";
 
 import { 
     NButton,NIcon,
-    NH1,NH6,NText,NSelect,NSpace,NInput,NInputNumber,NCard,
+    NH1,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,NCard,
  } from 'naive-ui';
 import {storeProject} from '@/store/storeProject.js';
 
@@ -137,7 +143,7 @@ export default{
     components:{
         ArrowBack,Checkbox,CloudUpload,
         NButton,NIcon,NCard,
-        NH1,NH6,NText,NSelect,NSpace,NInput,NInputNumber,
+        NH1,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,
     },
     data(){
         return{
@@ -178,8 +184,12 @@ export default{
         closeProjectDynamicForm(){
             eventBus.emit('closeProjectDynamicForm')
         },
-        saveForm(){
-            if(this.form.yearcosted==null)return;
+        saveItem(item){
+            if(item==="yearcosted" && this.form.yearcosted==null){
+                naiveApi.notifyFail("费用不能为空")
+                return;
+            }
+            console.log("saveItem: " + item)
         },
     }
 }
@@ -187,8 +197,8 @@ export default{
 
 <style scoped>
 .card{
-    max-width:20rem;
-    min-width:20rem;
+    width:20rem;
+    height:20rem;
     margin: 1rem;
 }
 #cardContainer{
@@ -198,5 +208,11 @@ export default{
 }
 :deep(.n-h6){
     margin:0;
+}
+:deep(.n-h4){
+    margin:0;
+}
+:deep(.n-card-header){
+    padding-top: 10px;
 }
 </style>

@@ -19,7 +19,9 @@
  } from "@vicons/ionicons5";
  
  import eventBus from '@/js/mittEventBus.js'
- 
+ import naiveApi from '@/js/naiveUiApi.js'
+import {storeAccount} from "@/store/storeAccount.js"
+
  export default{
      components:{
          NMenu,
@@ -58,6 +60,14 @@
          handleMenuClick(key){
              // 侧边菜单栏点击后，发出事件，通知<Content>切换主界面
              console.log("in Sider.vue handleMenuClick(), select content component",key); //点击菜单栏的叶节点，获取key
+             // 在这里做身份鉴别
+             if(["ProjectManage", "AccountManage"].includes(key)){
+                if(storeAccount.getThisOrgAccountMsg().org!=="平邑县发改局"){
+                    naiveApi.notifyFail("非管理员 无法访问")
+                    return;
+                }
+             }
+             
              eventBus.emit('changeContentComponent',key);
          },
    },
