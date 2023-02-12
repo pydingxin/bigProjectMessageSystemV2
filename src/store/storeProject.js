@@ -1,38 +1,8 @@
 import {reactive} from 'vue'    
-/*
-let projectColumn = [
-        {"title":"序号","key":"index"},
-        {"title":"项目名称","key":"name"},
-        {"title":"建设性质","key":"xingzhi"},
-        {"title":"建设级别","key":"jibie"},
-        {"title":"建设领域","key":"lingyu"},
-        {"title":"责任领导","key":"leader"},
-        {"title":"责任单位","key":"dutyorg"},
-        {"title":"联系方式","key":"contact"},
-        {"title":"主要内容和规模","key":"neroguimo"},
-        {"title":"建设单位","key":"builder"},
-        {"title":"建设地点","key":"place"},
-        {"title":"开工时间","key":"kaigong"},
-        {"title":"竣工时间","key":"jungong"},
-        {"title":"资金来源","key":"costfrom"},
-        {"title":"总计划投资","key":"allcost"},
-        {"title":"往年已投资","key":"hadcost"},
-        {"title":"今年计划投资","key":"yearcost"},
-        {"title":"今年建设计划","key":"yearplan"},
-        {"title":"今年节点目标","key":"yearnode"},
-        {"title":"立项","key":"lixiang"},
-        {"title":"用地","key":"yongdi"},
-        {"title":"规划","key":"guihua"},
-        {"title":"环评","key":"huanping"},
-        {"title":"能评","key":"nengping"},
-        {"title":"施工许可证","key":"xukezheng"},
-        {"title":"形象进度","key":"xingxiang"},
-        {"title":"今年投资额","key":"yearcosted"},
-];
-*/
 
-// 项目动态信息，责任单位编辑
-// 这个key就是对应的项目的id，根据key获取其基础信息，基础信息不能保存在这里
+
+// 项目动态信息，后端不会一次传过来，支持单条请求
+// 这个key就是对应的项目的id，根据key获取其静态信息
 let allProjectDynamicMsg = [
     //有三个状态，uninit,started,done
     {
@@ -61,19 +31,19 @@ let allProjectDynamicMsg = [
     },
 ];
 
-//后端传来的总的项目静态信息
+//项目静态信息,后端不会一次传过来，支持单条请求
 let allProjectStaticMsg=[
     {
         "key":0,
         "index":"1",
-        "name":"项目1",
+        "name":"项目责任单位财政局",
 
         "xingzhi":"新建",
         "jibie":"省重大",
         "lingyu":"道路交通",
 
         "leader":"王玉东",
-        "dutyorg":['2'],
+        "dutyorg":[2,3],
         "contact":"小兵甲4211087",
 
         "neroguimo":"大内容大规模",
@@ -95,14 +65,14 @@ let allProjectStaticMsg=[
     {
         "key":1,
         "index":"2",
-        "name":"项目3",
+        "name":"项目责任单位教育局",
 
         "xingzhi":"新建",
         "jibie":"省重大",
         "lingyu":"道路交通",
 
         "leader":"王玉西",
-        "dutyorg":['1'],
+        "dutyorg":[1,3],
         "contact":"小兵甲4211087",
 
         "neroguimo":"大内容大规模",
@@ -122,14 +92,51 @@ let allProjectStaticMsg=[
     },
 ];
 
-function getAllProjectStaticMsg(){
-    return allProjectStaticMsg.map(one=>({idx:one.index, key:one.key, name:one.name}));
+//初始化应从后端请求
+let allProjectList= allProjectStaticMsg.map(pro=>({
+    "key":pro.key,
+    "index":pro.index,
+    "name":pro.name,
+    "dutyorg":pro.dutyorg, //no
+}))
+console.log("allProjectList = ",allProjectList)
+function getAllProjectList(){
+    return allProjectList;
 }
-function getProjectMsgByKey(key){
-    return allProjectStaticMsg.find(one=>one.key===key)
+
+function getProjectStaticMsgByKey(projectkey){
+    // 每次应从后端请求，获取项目的静态信息
+    return allProjectStaticMsg.find(one=>one.key===projectkey)
 }
+
+function getProjectDynamicMsgByKey(projectkey){
+    // 每次应从后端请求，获取项目的动态信息
+    return allProjectDynamicMsg.find(one=>one.key===projectkey);
+}
+
+function getProjectKeyListByDutyorgKey(orgkey){ 
+    //后台获取
+    return allProjectStaticMsg.filter(pro=>pro.dutyorg.includes(orgkey)).map(x=>x.key);
+}
+
+function getProjectListByDutyorgKey(orgkey){
+    let hisProjectKeys = getProjectKeyListByDutyorgKey(orgkey)
+    console.log(`getProjectListByDutyorgKey(${orgkey}) → `,hisProjectKeys)
+    return allProjectList.filter(pro=>hisProjectKeys.includes(pro.key))
+}
+/*
+    后端要有这三个接口，对应三种主要项目信息 
+    单个静态信息 单个动态信息
+    项目列表（index/key/xmname），项目列表是静态信息表的列。
+    
+    Project模块需要接口： 项目列表 单条静态信息（用于编辑静态信息）
+    MyProject模块需要：项目列表 单条动态信息 我的项目权限表
+*/
 export const storeProject = reactive({
-    getAllProjectStaticMsg,
-    getProjectMsgByKey,
+    getAllProjectList,
+    getProjectListByDutyorgKey,
+
+    getProjectStaticMsgByKey,
+    getProjectDynamicMsgByKey,
 })
   

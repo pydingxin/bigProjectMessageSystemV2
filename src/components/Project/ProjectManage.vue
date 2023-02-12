@@ -54,7 +54,7 @@ export default{
     methods:{
         refreshProjectMsg(){
             //每行的key都是项目key，可以用这个key删除项目
-            this.tableData = storeProject.getAllProjectStaticMsg()
+            this.tableData = storeProject.getAllProjectList()
             // console.log("in ProjectManage.vue refreshProjectMsg(), got ",this.tableData)
         },
         addProject(){
@@ -89,7 +89,7 @@ export default{
             columns:[
                 {
                     title: "项目序号",
-                    key: "idx"
+                    key: "index"
                 },
                 {
                     title: "项目名",

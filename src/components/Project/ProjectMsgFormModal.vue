@@ -137,6 +137,8 @@ export default{
       saveForm(){
         this.showConfirmBtn=false;
         console.log("save form")
+        // 每次保存静态信息，后端应该在项目-责任单位表中自动修改责任单位信息，
+      
       },
       addProject(){
         console.log("addProject",this.eventMsg);
@@ -147,7 +149,7 @@ export default{
       editProject(){
         console.log("editProject",this.eventMsg);
         this.modalTitle= `编辑项目`
-        this.form= storeProject.getProjectMsgByKey(this.eventMsg.projectKey)
+        this.form= storeProject.getProjectStaticMsgByKey(this.eventMsg.projectKey)
         this.options= storeAccount.getAllOrgAccountMsg().map(org=>({value:org.key,label:org.org}));
       },
       handleUpdateValue(value, options) {
