@@ -1,4 +1,5 @@
 <template>
+
 <div id="container">
     <div id="content">
         <div id="img"></div>
@@ -14,7 +15,7 @@
             <br />
             <div id="tool">
                 <n-checkbox size="large" label="记住密码" v-model:checked="remember_account" />
-                <n-checkbox size="large" label="查看汇总" v-model:checked="summary" />
+                <n-checkbox size="large" label="游客登录" v-model:checked="summary" />
             </div>
         </div>
     </div>
@@ -25,9 +26,11 @@ import {NInput,NButton,NSpace,NCheckbox,} from "naive-ui"
 import {storeAccount} from '@/store/storeAccount.js'
 import eventBus from '@/js/mittEventBus.js'
 
+
 export default{
     components:{
         NInput,NButton,NSpace,NCheckbox,
+        
     },
     data(){
         return {
@@ -87,8 +90,13 @@ export default{
     width:30rem;
     height:50rem;
     overflow:hidden;
-    border-radius:20px;
-    box-shadow: 0px 10px 34px -15px rgb(0 0 0 / 24%)
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0,191,255, 0.075);
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+    border: 2px rgba(255,255,255,0.4) solid;
+    border-bottom: 2px rgba(40,40,40,0.35) solid;
+    border-right: 2px rgba(40,40,40,0.35) solid;
 }
 #img{
     /* 图片高度占30% */
