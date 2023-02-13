@@ -15,6 +15,7 @@
 
       </n-layout>
     </n-layout>
+    <ChangePasswordModal />
   </template>
   
 <script>
@@ -26,10 +27,13 @@ import {
   NLayoutContent,NLayoutHeader,NLayoutSider,NLayout,
 }from "naive-ui"
 
+import ChangePasswordModal from '@/components/Password/ChangePasswordModal.vue';
+
 export default{
   components:{
     Sider,Header,Content,
-  NLayoutContent,NLayoutHeader,NLayoutSider,NLayout,
+    NLayoutContent,NLayoutHeader,NLayoutSider,NLayout,
+    ChangePasswordModal,
   },
   data(){
     return{

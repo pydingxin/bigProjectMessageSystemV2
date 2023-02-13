@@ -10,6 +10,7 @@
               <span style="font-size: medium;color:white">{{ thisOrg.org }}</span>
             </div>
         </n-dropdown>
+        
     </div>
 </template>
     
@@ -36,9 +37,11 @@ import {
 
 import {storeAccount} from '@/store/storeAccount.js'
 
+import eventBus from '@/js/mittEventBus.js'
+
 export default{
     components:{
-      NSpace,NAvatar,NDropdown,NIcon
+      NSpace,NAvatar,NDropdown,NIcon,
     },
     mounted(){
       this.thisOrg = storeAccount.getThisOrgAccountMsg()
@@ -64,8 +67,10 @@ export default{
     },
     methods:{
         handleAvatarSelect(item){
-            console.log(item,this.thisOrg.org); 
-        }
+            console.log("Header.vue ",item,this.thisOrg); 
+            if(item==="changePassword") eventBus.emit("changePassword",this.thisOrg)
+        },
+
     },
 }
 </script>

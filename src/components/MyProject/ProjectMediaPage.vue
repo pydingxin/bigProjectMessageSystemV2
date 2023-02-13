@@ -9,34 +9,36 @@
             上传图片视频素材，展示项目当前状态。
         </n-text>
     </n-space>
+<div style="display:flex; flex-direction:row; justify-content: center;">
+    <div style="width:50%; min-width:40rem; margin:1rem;">
+        <!-- name是后端用的r.GetUploadFiles("upload-file") -->
+        <n-upload
+            action="http://localhost:8199/upload/"
+            :default-file-list="uploadedFileList"
+            name="upload-file"
 
- <!-- name是后端用的r.GetUploadFiles("upload-file") -->
- <n-upload
-    action="http://localhost:8199/upload/"
-    :default-file-list="uploadedFileList"
-    name="upload-file"
+            :multiple="true"
+            :with-credentials="true" 
+            :show-download-button="true"
+            :show-remove-button="true"
+            :show-retry-button="true"
 
-    :multiple="true"
-    :with-credentials="true" 
-    :show-download-button="true"
-    :show-remove-button="true"
-    :show-retry-button="true"
-
-    @finish="afterUpload"
-    @remove="removeFile"
-    @before-upload="beforeUpload"
-    @error="handleUploadError"
-    @download="handleDownload"
-  >
-    <n-upload-dragger>
-      <n-gradient-text :size="15" gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)">
-        <p>拖到此处，立刻上传</p>
-        <p>【文件名要反映文件内容，重名文件自动覆盖】</p>
-        <p>【点击删除按钮，可删除文件】</p>
-      </n-gradient-text>
-    </n-upload-dragger>
-
-  </n-upload>
+            @finish="afterUpload"
+            @remove="removeFile"
+            @before-upload="beforeUpload"
+            @error="handleUploadError"
+            @download="handleDownload"
+        >
+            <n-upload-dragger>
+                <n-gradient-text :size="15" gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)">
+                    <p>拖到此处，立刻上传</p>
+                    <p>【文件名要反映文件内容，重名文件自动覆盖】</p>
+                    <p>【点击删除按钮，可删除文件】</p>
+                </n-gradient-text>
+            </n-upload-dragger>
+        </n-upload>
+    </div>
+</div>
 </template>
 
 <script>
