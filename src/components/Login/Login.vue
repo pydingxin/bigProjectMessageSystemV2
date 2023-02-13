@@ -17,6 +17,7 @@
                 <n-checkbox size="large" label="记住密码" v-model:checked="remember_account" />
                 <n-checkbox size="large" label="游客登录" v-model:checked="summary" />
             </div>
+            
         </div>
     </div>
 </div>
@@ -44,6 +45,10 @@ export default{
 
     mounted(){
         this.input_remembered_account()
+        let ua = navigator.userAgent;
+        if(ua.includes("Mobile") || ua.includes("Android"))
+        alert("you're mobile")
+        else alert("you're pc")
     },
 
     methods:{
@@ -94,7 +99,6 @@ export default{
     backdrop-filter: blur(5px);
     background-color: rgba(0,191,255, 0.075);
     box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-    border: 2px rgba(255,255,255,0.4) solid;
     border-bottom: 2px rgba(40,40,40,0.35) solid;
     border-right: 2px rgba(40,40,40,0.35) solid;
 }
