@@ -1,20 +1,23 @@
 <template>
-    <!-- 返回按钮 -->
-    <n-button type="tertiary" dashed  @click="closeProjectDynamicForm">
-      <template #icon>
-        <n-icon><arrow-back /></n-icon>
-      </template>
-      返回
-    </n-button>
+    <n-space align="center">
+        <!-- 返回按钮 -->
+        <n-button type="tertiary" dashed  @click="closeProjectDynamicForm">
+            <template #icon><n-icon><arrow-back /></n-icon></template>
+            返回
+        </n-button>
+
+        <n-text type="warning">
+            进度管理的每次提交都会存档，形成工作推进记录，请认真填写
+        </n-text>
+    </n-space>
+
 
     <!-- 标题 -->
-    <n-h1 prefix="bar"><n-text type="primary">
+    <n-h2 prefix="bar"><n-text type="primary">
         {{ staticMsg.name }}
-    </n-text></n-h1>
+    </n-text></n-h2>
 
-    <n-h3><n-text type="warning">
-        每次提交都会存档，形成时间线，请认真填写
-    </n-text></n-h3> 
+
 
     <!-- 卡片 -->
     <div id="cardContainer">
@@ -121,7 +124,7 @@ import { ArrowBack,CloudUpload,Checkbox} from "@vicons/ionicons5";
 
 import { 
     NButton,NIcon,
-    NH1,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,NCard,
+    NH2,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,NCard,
  } from 'naive-ui';
 import {storeProject} from '@/store/storeProject.js';
 
@@ -143,7 +146,7 @@ export default{
     components:{
         ArrowBack,Checkbox,CloudUpload,
         NButton,NIcon,NCard,
-        NH1,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,
+        NH2,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,
     },
     data(){
         return{

@@ -1,5 +1,5 @@
 <template>
-    <div v-show="!showSubmitPage">
+    <div v-show="!showSubmitPage && !showMediaPage">
         <n-space>
             <!-- 输入空时查找全部 -->
             <n-input clearable 
@@ -25,6 +25,10 @@
     <div v-show="showSubmitPage">
         <ProjectDynamicForm />
     </div>
+    
+    <div v-show="showMediaPage">
+        <ProjectMediaPage />
+    </div>
 </template>
 
 <script>
@@ -36,14 +40,17 @@ import eventBus from '@/js/mittEventBus.js'
 import { h} from "vue";
 import { NDataTable,NButton,NInput,NSpace,NIcon, } from 'naive-ui';
 import { Search} from "@vicons/ionicons5";
-import ProjectSubmitButton from './ProjectSubmitButton.vue'
+import ProjectDynamicFormButton from './ProjectDynamicFormButton.vue'
 import ProjectDynamicForm from './ProjectDynamicForm.vue'
+import ProjectMediaPage from './ProjectMediaPage.vue'
+import ProjectMediaPageButton from './ProjectMediaPageButton.vue'
+
 export default{
     components: {
         NDataTable,NButton,NInput,NSpace,
         NIcon,Search,
-        ProjectDynamicForm,
-        ProjectSubmitButton,
+        ProjectDynamicForm,ProjectMediaPage,
+        ProjectDynamicFormButton,
     },
     mounted(){
         let myAccount = storeAccount.getThisOrgAccountMsg();
@@ -60,10 +67,20 @@ export default{
             that.showSubmitPage=false;
         })
         
+        eventBus.on("openProjectMediaPage",function(projectkey){
+            console.log("MyProject.vue got event openProjectMediaPage, projectkey=",projectkey);
+            that.showMediaPage=true;
+        });
+        eventBus.on("closeProjectMediaPage",function(){
+            console.log("MyProject.vue got event closeProjectMediaPage");
+            that.showMediaPage=false;
+        })
+        
     },
     data(){
         return {
-            showSubmitPage:false,        //展示动态信息编辑页
+            showSubmitPage:false,  //展示动态信息编辑页
+            showMediaPage:false,   //展示媒体素材页
 
             tableDataOnShow:[],
             tableData:[],
@@ -73,7 +90,8 @@ export default{
             columns:[
                 {title: "项目序号", key: "index"},
                 {title: "项目名", key: "name"},
-                {title:"",key:"edit",render(row) {return h(ProjectSubmitButton,{projectKeyProxy: row.key,},{default:()=>"编辑项目"});}}
+                {title:"",key:"edit",render(row) {return h(ProjectDynamicFormButton,{projectKeyProxy: row.key,},{default:()=>"进度管理"});}},
+                {title:"",key:"media",render(row) {return h(ProjectMediaPageButton,{projectKeyProxy: row.key,},{default:()=>"影像管理"});}},
             ],
             
         }

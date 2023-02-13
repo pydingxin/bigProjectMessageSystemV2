@@ -1,7 +1,7 @@
 import {reactive} from 'vue'    
 function getThisOrgAccountMsg(){
     //当前用户的账号信息
-    return msg[1]
+    return msg[0]
 }
 let msg=[
     {key:3,org:"平邑县发改局",name:"pyxfgj",pass:"123456"},
