@@ -1,7 +1,8 @@
 <template>
 
 <div id="container">
-    <div id="content">
+    <!-- //根据设备切换面板大小 -->
+    <div :class="{content_pc:is_pc, content_mobile:!is_pc}">
         <div id="img"></div>
         <div id="title">
             <h1>平邑县项目信息报送系统</h1>
@@ -11,11 +12,11 @@
             <br />
             <n-input class="word" v-model:value="pass" type="password" show-password-on="click" placeholder="密码" />
             <br />
-            <n-button class="word" type="info" @click="signin"> 登录 </n-button>
+            <n-button class="word" type="info" @click="login"> 登录 </n-button>
             <br />
             <div id="tool">
                 <n-checkbox size="large" label="记住密码" v-model:checked="remember_account" />
-                <n-checkbox size="large" label="游客登录" v-model:checked="summary" />
+                
             </div>
             
         </div>
@@ -39,23 +40,26 @@ export default{
             pass:"",
 
             remember_account:true,
-            summary:false,
+            is_pc:true, //是否pc端打开
         }
     },
 
     mounted(){
         this.input_remembered_account()
         let ua = navigator.userAgent;
-        if(ua.includes("Mobile") || ua.includes("Android"))
-        alert("you're mobile")
-        else alert("you're pc")
+        if(ua.includes("Mobile") || ua.includes("Android")) this.is_pc=false;
+        
     },
 
     methods:{
-        signin(){
+        login(){
             this.try_remember_account()
             if(storeAccount.validateAccount(this.name,this.pass)){
-                eventBus.emit("account_validated_signin")
+                if(this.is_pc){
+                    eventBus.emit("account_login_on_pc");
+                }else{
+                    eventBus.emit("account_login_on_mobile");
+                }
             }
         },
 
@@ -90,10 +94,10 @@ export default{
     justify-content: center;
     align-items: center;
 }
-#content{
+.content_pc{
     /* 限制整体尺寸 */
-    width:30rem;
-    height:50rem;
+    width:25rem;
+    height:40rem;
     overflow:hidden;
     border-radius: 10px;
     backdrop-filter: blur(5px);
@@ -102,6 +106,12 @@ export default{
     border-bottom: 2px rgba(40,40,40,0.35) solid;
     border-right: 2px rgba(40,40,40,0.35) solid;
 }
+
+.content_mobile{
+    width:100vw;
+    height:100vh;
+}
+
 #img{
     /* 图片高度占30% */
     background:url("@/assets/bg.jpg");
