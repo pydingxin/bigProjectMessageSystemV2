@@ -1,0 +1,94 @@
+一、前后端交流，所有字段统一使用字符串
+
+#. 账号相关
+## Login.vue
+登录验证接口 name,pass 返回当前账号用户信息
+
+## ChangePasswordModal.vue
+修改密码接口 oldpassword,newpassword 
+
+## Header.vue
+退出登录接口 用户id
+
+# 项目管理模块Project 项目管理(增删改)
+## 静态信息表单 ProjectMsgFormModal.vue
+### 创建项目，发送静态信息，每一项由前端转为字符串
+{
+    key:-1, //该key是库表id，并不存在
+    //标题
+    index:"",   //序号
+    name:"", //项目名称
+    
+    // 标签
+    xingzhi:"", //建设性质
+    jibie:"",   //建设级别
+    lingyu:"",  //建设领域
+
+    // 干系人
+    leader:"",  //责任领导
+    dutyorg:[], //责任单位key/id
+    contact:"", //联系方式
+
+    // 整体计划
+    neroguimo:"", //主要建设内容和规模
+    builder:"",   //建设单位
+    place:"",     //建设地点
+    kaigong:"",   //开工时间
+    jungong:"",   //竣工时间
+
+    // 资金回顾
+    costfrom:"",    //资金来源
+    allcost:0,    //总计划投资
+    hadcost:0,    //往年已投资
+
+    // 今年计划
+    yearcost:0,   //今年计划投资
+    yearplan:"",    //今年建设计划
+    yearnode:"",    //今年节点目标
+  },
+### 修改项目静态信息。表单同上
+
+## ProjectDeleteButton.vue 删除项目 projectkey
+
+# 账号模块Account 账号管理（增删改）
+## AddPanel.vue 增加账号 org,user,pass
+## EditPanel.vue 修改账号 key,org,user,pass
+## DeleteButton.vue 删除账号 key
+
+# 我的项目模块MyProject 
+## 动态信息表单 ProjectDynamicForm.vue
+有8个单独提交的字符串
+key, lixiang
+key, yongdi
+key, guihua
+key, huanping
+key, nengping
+key, xukezheng
+key, xingxiang
+key, yearcosted
+
+## 影像管理 ProjectMediaPage.vue
+上传文件 projectkey,filename,
+删除文件 projectkey,filename,
+
+二、所有后端操作通过store暴露的接口：
+
+# 账号管理接口 storeAccount
+## 获取所有用户账号 key,org,name,pass,
+其他账号接口都归于此处
+
+# 附件管理接口 storeMedia
+## 获取一个项目的所有文件信息 projectkey → filekey，filename
+
+# 项目管理接口storeProject
+## 获取所有项目静态信息
+## 获取所有项目动态信息
+## 根据key获取静态信息
+## 根据key获取动态信息
+其他对项目信息增删改的接口归于此处
+
+三、其他考虑：
+# 时间线
+获取一个项目条目的修改历史：projectkey,lixiang →
+
+# 下载文件 projectkey,filekey → file

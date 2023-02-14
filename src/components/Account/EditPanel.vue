@@ -23,7 +23,7 @@ export default{
         console.log("in AccountEditPanel.vue mounted(),editAccount event,orgkey=",orgkey);
         let m=storeAccount.getOrgMsgByKey(orgkey);
         console.log("in AccountEditPanel.vue, m=",m);
-        [this.org,this.user,this.pass] = [m.org,m.name,m.pass]
+        [this.key,this.org,this.user,this.pass] = [m.key,m.org,m.name,m.pass]
         this.showThisPanel=true;
     })
    },
@@ -33,6 +33,7 @@ export default{
             org:"",
             user:"",
             pass:"",
+            key:"",
        }
    },
    methods:{
