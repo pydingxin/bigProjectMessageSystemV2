@@ -1,11 +1,12 @@
 <template>
+    <div id="particles"></div>
 
 <div id="container">
     <!-- //根据设备切换面板大小 -->
     <div :class="{content_pc:is_pc, content_mobile:!is_pc}">
         <div id="img"></div>
         <div id="title">
-            <h1>平邑县项目信息报送系统</h1>
+            <span>平邑县项目信息报送系统</span>
         </div>
         <div id="form">
             <n-input class="word" v-model:value="name" type="text" placeholder="账号" />
@@ -15,18 +16,23 @@
             <n-button class="word" type="info" @click="login"> 登录 </n-button>
             <br />
             <div id="tool">
-                <n-checkbox size="large" label="记住密码" v-model:checked="remember_account" />
-                
-            </div>
-            
+                <n-checkbox size="large" label="记住密码" v-model:checked="remember_account" />      
+            </div>        
         </div>
     </div>
+
 </div>
 </template>
 <script>
 import {NInput,NButton,NSpace,NCheckbox,} from "naive-ui"
 import {storeAccount} from '@/store/storeAccount.js'
 import eventBus from '@/js/mittEventBus.js'
+
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+import './jquery.min.js'
+import './lizi.js'
+
 
 
 export default{
@@ -48,8 +54,14 @@ export default{
         this.input_remembered_account()
         let ua = navigator.userAgent;
         if(ua.includes("Mobile") || ua.includes("Android")) this.is_pc=false;
-        
+
+        // 因为登入登出导致Login.vue销毁重建，在这里执行如下函数绘制粒子
+        particleground(document.getElementById('particles'), {
+            dotColor: '#16a085',
+            lineColor: '#16a085'
+        });
     },
+
 
     methods:{
         login(){
@@ -85,6 +97,11 @@ export default{
 </script>
 
 <style scoped>
+:deep(canvas){
+    height:100vh;
+    background-color:white;
+}
+
 #container{
     /* 使整体位于屏幕中间 */
     display: flex;
@@ -93,14 +110,15 @@ export default{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
 }
 .content_pc{
     /* 限制整体尺寸 */
+    z-index: 100;
     width:25rem;
     height:40rem;
     overflow:hidden;
     border-radius: 10px;
-    backdrop-filter: blur(5px);
     background-color: rgba(0,191,255, 0.075);
     box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
     border-bottom: 2px rgba(40,40,40,0.35) solid;
@@ -108,6 +126,7 @@ export default{
 }
 
 .content_mobile{
+    z-index: 100;
     width:100vw;
     height:100vh;
 }
@@ -124,7 +143,7 @@ export default{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
+    font-size: 1.7rem;
 }
 #form{
     display: flex;
@@ -147,5 +166,13 @@ export default{
     justify-content: space-around;
     width:60%;
 
+}
+#particles{
+    position:fixed;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    z-index: 0;
 }
 </style>
