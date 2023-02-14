@@ -30,15 +30,15 @@ import eventBus from '@/js/mittEventBus.js'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
-import './jquery.min.js'
-import './lizi.js'      //该文件在document上注册了一个叫particleground的组件
-
-
+import './jquery.min.js'   
+// 该文件在document上注册了一个叫particleground的组件
+// 调用该组件即可绘制
+import './lizi.js'   
 
 export default{
     components:{
         NInput,NButton,NSpace,NCheckbox,
-        
+
     },
     data(){
         return {

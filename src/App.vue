@@ -1,15 +1,16 @@
 <template>
-  <template v-if="account_login_on_pc">
-    <Layout />
-  </template>
 
-  <template v-if="account_login_on_mobile">
-    <MobileLayout />
-  </template>
+    <template v-if="account_login_on_pc">
+      <Layout />
+    </template>
 
-  <template v-if="!account_login_on_pc && !account_login_on_mobile">
-    <Login />
-  </template>
+    <template v-if="account_login_on_mobile">
+      <MobileLayout />
+    </template>
+
+    <template v-if="!account_login_on_pc && !account_login_on_mobile">
+      <Login />
+    </template>
 
 </template>
   
@@ -23,6 +24,7 @@ import eventBus from '@/js/mittEventBus.js'
       components: {
         Layout,Login,
         MobileLayout,
+
       },
     data() {
       return {

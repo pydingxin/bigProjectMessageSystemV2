@@ -4,4 +4,7 @@ import App from './App.vue'
 import 'vfonts/Lato.css'
 import 'vfonts/FiraCode.css'
 import "./assets/main.css"
-createApp(App).mount('#app')
+
+import VueFullscreen from 'vue-fullscreen'
+
+createApp(App).use(VueFullscreen).mount('#app')

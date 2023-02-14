@@ -1,25 +1,42 @@
 <template>
-    您在手机端登录<br />
-    暂时什么都没有<br />
-    <button @click="exit">退出</button>
-    <!-- Layout应为单根节点 -->
+      <div class="fullscreen_wrapper">
+        <div>{{ fullscreen }}</div>
+        <button type="button" @click="toggle" >切换全屏</button>
+      </div>
+      
 </template>
 
 <script>
-
-import eventBus from '@/js/mittEventBus.js'
-export default{
-    data(){
-        return {
-
+import { api as fullscreen } from 'vue-fullscreen'
+export default {
+    data() {
+        return{
+            fullscreen: false,
         }
     },
-    mounted(){
-    },
+
     methods:{
-        exit(){
-            eventBus.emit("account_logout")
-        },
-    }
+        async toggle(){
+        let state = this;
+        fullscreen.toggle(document.querySelector('.fullscreen_wrapper'), {
+            teleport: true,
+            callback: (isFullscreen) => {
+            state.fullscreen = isFullscreen
+            },
+        })
+        }  
+    },
+        
+
 }
 </script>
+
+<style>
+.fullscreen_wrapper{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+</style>
