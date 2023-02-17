@@ -69,6 +69,8 @@ export default{
         handleAvatarSelect(item){
             console.log("Header.vue ",item,this.thisOrg); 
             if(item==="changePassword") eventBus.emit("changePassword",this.thisOrg)
+
+            //登出事件，storeAccount.js发出登出请求，App.vue切换界面
             if(item==="logout") eventBus.emit("account_logout")
             
         },

@@ -7,4 +7,7 @@ import "./assets/main.css"
 
 import VueFullscreen from 'vue-fullscreen'
 
-createApp(App).use(VueFullscreen).mount('#app')
+let app=createApp(App)
+
+
+app.use(VueFullscreen).mount('#app')

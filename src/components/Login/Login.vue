@@ -64,9 +64,10 @@ export default{
 
 
     methods:{
-        login(){
+        async login(){
             this.try_remember_account()
-            if(storeAccount.validateAccount(this.name,this.pass)){
+            if(await storeAccount.validateAccount(this.name,this.pass)){
+                //App.vue监听事件，切换界面
                 if(this.is_pc){
                     eventBus.emit("account_login_on_pc");
                 }else{
