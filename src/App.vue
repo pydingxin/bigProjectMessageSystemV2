@@ -34,7 +34,6 @@ import eventBus from '@/js/mittEventBus.js'
       }
     },
     methods:{
-
     },
     mounted(){
       let that=this;

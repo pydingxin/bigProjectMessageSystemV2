@@ -53,9 +53,7 @@ export default{
         ProjectDynamicFormButton,
     },
     mounted(){
-        let myAccount = storeAccount.getThisOrgAccountMsg();
-        this.tableData = storeProject.getProjectListByDutyorgKey(myAccount.key);
-        this.tableDataOnShow = this.tableData;
+        this.refreshView()
 
         let that = this;
         eventBus.on("openProjectDynamicForm",function(projectkey){
@@ -97,6 +95,12 @@ export default{
         }
     },
     methods:{
+        async refreshView(){
+            let myAccount = storeAccount.getThisOrgAccountMsg();
+            this.tableData = await storeProject.getProjectListByDutyorgKey(myAccount.key);
+            console.log("my projects: ",this.tableData)
+            this.tableDataOnShow = this.tableData;
+        },
 
         searchProject(){
             //click search button

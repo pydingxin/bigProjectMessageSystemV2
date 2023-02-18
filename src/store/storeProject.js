@@ -76,9 +76,11 @@ function getProjectKeyListByDutyorgKey(orgkey){
     return allProjectStaticMsg.filter(pro=>(pro?.dutyorg?.includes(orgkey)??false)).map(pro=>pro.key);
 }
 
-function getProjectListByDutyorgKey(orgkey){
+async function getProjectListByDutyorgKey(orgkey){
+    // 获取当前账号的项目信息
+    if(allProjectStaticMsg.length==0) await initStoreProject();
     let hisProjectKeys = getProjectKeyListByDutyorgKey(orgkey)
-    console.log(`getProjectListByDutyorgKey(${orgkey}) → `,hisProjectKeys)
+    // console.log(`getProjectListByDutyorgKey(${orgkey}) → `,hisProjectKeys)
     return allProjectList.filter(pro=>hisProjectKeys.includes(pro.key))
 }
 /*
