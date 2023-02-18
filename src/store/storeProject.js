@@ -1,4 +1,6 @@
 import {reactive} from 'vue'    
+import {mypost} from "@/js/fetchapi.js"
+import eventBus from '@/js/mittEventBus.js'
 
 
 // 项目动态信息，后端不会一次传过来，支持单条请求
@@ -32,74 +34,28 @@ let allProjectDynamicMsg = [
 ];
 
 //项目静态信息,后端不会一次传过来，支持单条请求
-let allProjectStaticMsg=[
-    {
-        "key":0,
-        "index":"1",
-        "name":"城建项目【责任单位财政局】",
+let allProjectStaticMsg=[]; //完全版的静态项目信息
+let allProjectList= []; //简版的静态项目信息
+async function initStoreProject(){
+    let ret = await mypost("/staticmsg/getall")
+    if(false===ret.status)return;
+    allProjectStaticMsg= ret.data;
 
-        "xingzhi":"新建",
-        "jibie":"省重大",
-        "lingyu":"道路交通",
+    console.log("allProjectStaticMsg=",allProjectStaticMsg);
 
-        "leader":"王玉东",
-        "dutyorg":[2,3],
-        "contact":"小兵甲4211087",
+    allProjectList= allProjectStaticMsg.map(pro=>({
+        "key":pro.key,
+        "index":pro.index,
+        "name":pro.name,
+        "dutyorg":pro.dutyorg, //no
+    }))
+}
 
-        "neroguimo":"大内容大规模",
-        "builder":"建设单位甲",
-        "place":"建设地点县城",
-        "kaigong":"开工日",
-        "jungong":"竣工日",
+async function deleteProject(key){
+    let ret = await mypost("/staticmsg/delete",{key})
+    return ret.status
+}
 
-        "costfrom":"自筹资金",
-        "allcost":2000,
-        "hadcost":1000,
-
-        "yearcost":1000,
-        "yearplan":"今年计划完成",
-        "yearnode":"节点紧迫",
-
-    },
-    
-    {
-        "key":1,
-        "index":"2",
-        "name":"项目责任单位教育局",
-
-        "xingzhi":"新建",
-        "jibie":"省重大",
-        "lingyu":"道路交通",
-
-        "leader":"王玉西",
-        "dutyorg":[1,3],
-        "contact":"小兵甲4211087",
-
-        "neroguimo":"大内容大规模",
-        "builder":"建设单位甲",
-        "place":"建设地点县城",
-        "kaigong":"开工日",
-        "jungong":"竣工日",
-
-        "costfrom":"自筹资金",
-        "allcost":2000,
-        "hadcost":1000,
-
-        "yearcost":1000,
-        "yearplan":"今年计划完成",
-        "yearnode":"节点紧迫",
-
-    },
-];
-
-//初始化应从后端请求
-let allProjectList= allProjectStaticMsg.map(pro=>({
-    "key":pro.key,
-    "index":pro.index,
-    "name":pro.name,
-    "dutyorg":pro.dutyorg, //no
-}))
-console.log("allProjectList = ",allProjectList)
 function getAllProjectList(){
     return allProjectList;
 }
@@ -115,8 +71,9 @@ function getProjectDynamicMsgByKey(projectkey){
 }
 
 function getProjectKeyListByDutyorgKey(orgkey){ 
-    //后台获取
-    return allProjectStaticMsg.filter(pro=>pro.dutyorg.includes(orgkey)).map(x=>x.key);
+    //获取该单位所有负责项目的key
+    //dutyorg可能为undefined
+    return allProjectStaticMsg.filter(pro=>(pro?.dutyorg?.includes(orgkey)??false)).map(pro=>pro.key);
 }
 
 function getProjectListByDutyorgKey(orgkey){
@@ -135,8 +92,9 @@ function getProjectListByDutyorgKey(orgkey){
 export const storeProject = reactive({
     getAllProjectList,
     getProjectListByDutyorgKey,
-
+    initStoreProject,
     getProjectStaticMsgByKey,
     getProjectDynamicMsgByKey,
+    deleteProject,
 })
   

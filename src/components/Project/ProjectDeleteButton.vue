@@ -13,7 +13,10 @@
 <script>
 import { NPopconfirm,NButton } from 'naive-ui';
 import { toRaw } from 'vue'
+import { storeProject } from '../../store/storeProject';
 
+import eventBus from '@/js/mittEventBus.js'
+import naiveUiApi from '@/js/naiveUiApi.js'
 export default{
     props:['projectKeyProxy','projectNameProxy'],
     components:{
@@ -32,10 +35,13 @@ export default{
         }
     },
     methods:{
-        confirmDelete(){
+        async confirmDelete(){
             this.show=false;
-            console.log('delete project key/id=',this.projectKey);
-            // 由专门的store执行
+            if(await storeProject.deleteProject(this.projectKey)){
+                naiveUiApi.notifySuccess("删除成功")
+                eventBus.emit("refreshProjectMsg")
+            }
+            this.show=false;
         },
     }
 }

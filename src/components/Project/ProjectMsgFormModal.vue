@@ -40,7 +40,7 @@
       </div>
       <div class="horizon">
         <span class="width4" >责任单位</span>
-        <n-cascader v-model:value="form.dutyorg" multiple clearable placeholder="责任单位" :options="options" @update:value="handleUpdateValue" />
+        <n-cascader v-model:value="form.dutyorg" multiple clearable placeholder="责任单位" :options="options" />
     </div>
 
 
@@ -101,7 +101,7 @@
     <n-popconfirm v-model:show="showConfirmBtn" :show-icon="false" positive-text="确定" negative-text="取消" >
       <template #trigger> <n-button> 保存编辑 </n-button> </template>
       确定保存？
-      <template #action> <n-button size="small" @click="saveForm"> 确定！</n-button> </template>
+      <template #action> <n-button size="small" @click="saveForm"> Yes</n-button> </template>
     </n-popconfirm>
   </template>
 
@@ -110,6 +110,8 @@
 
 <script>
 
+import naiveUiApi from '@/js/naiveUiApi.js'
+import {mypost} from "@/js/fetchapi.js"
 import eventBus from '@/js/mittEventBus.js'
 import {storeProject} from "@/store/storeProject.js"
 import {storeAccount} from "@/store/storeAccount.js"
@@ -124,8 +126,7 @@ export default{
     mounted(){
       let that=this;
       eventBus.on('showProjectMsgFormModal',msg=>{
-        // console.log("in showProjectMsgFormModal.vue got event: showProjectMsgFormModal")
-        // console.log("msg= ",msg)
+        // 监听按钮发出的事件，显示本组件。
         that.eventMsg = msg;
         msg.type === "edit" && that.editProject();
         msg.type === "add" && that.addProject();
@@ -134,28 +135,38 @@ export default{
       
     },
     methods:{
-      saveForm(){
+      async saveForm(){
         this.showConfirmBtn=false;
         console.log("save form")
-        // 每次保存静态信息，后端应该在项目-责任单位表中自动修改责任单位信息，
-      
+
+        let ret={}
+        if(this.eventMsg.type === "add"){
+          ret=await mypost("/staticmsg/create",this.form)
+        }else{
+          ret=await mypost("/staticmsg/edit",this.form)
+        }
+
+        if(ret.status){
+          naiveUiApi.notifySuccess("保存成功")
+          await eventBus.emit("refreshProjectMsg")//刷新store & view
+          this.showModal=false;
+        }
+        this.showConfirmBtn=false;
       },
       addProject(){
+        // 设置界面
         console.log("addProject",this.eventMsg);
         this.modalTitle= "创建项目"
         this.form={}; //清空上次编辑时留存的数据
         this.options= [];
       },
       editProject(){
+        // 设置界面
         console.log("editProject",this.eventMsg);
         this.modalTitle= `编辑项目`
         this.form= storeProject.getProjectStaticMsgByKey(this.eventMsg.projectKey)
         this.options= storeAccount.getAllOrgAccountMsg().map(org=>({value:org.key,label:org.org}));
       },
-      handleUpdateValue(value, options) {
-        // 点击责任单位
-        console.log("select org key ",value);
-      }
     },
     data(){
         return{

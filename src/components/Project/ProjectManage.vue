@@ -52,10 +52,11 @@ export default{
         ProjectMsgFormModal,
     },
     methods:{
-        refreshProjectMsg(){
+        async refreshProjectMsg(){
             //每行的key都是项目key，可以用这个key删除项目
-            this.tableData = storeProject.getAllProjectList()
-            // console.log("in ProjectManage.vue refreshProjectMsg(), got ",this.tableData)
+            await storeProject.initStoreProject() //重置store
+            this.tableData = storeProject.getAllProjectList() //重置本模块数据
+            this.tableDataOnShow = this.tableData; //重置视图
         },
         addProject(){
             console.log("add project")
@@ -79,8 +80,8 @@ export default{
         },
     },
     mounted(){
+        eventBus.on("refreshProjectMsg",this.refreshProjectMsg);
         this.refreshProjectMsg()
-        this.tableDataOnShow = this.tableData;
     },
     data(){
         return{
