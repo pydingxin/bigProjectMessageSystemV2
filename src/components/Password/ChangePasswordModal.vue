@@ -35,6 +35,7 @@ import eventBus from '@/js/mittEventBus.js'
 import {
     NModal,NInput,NSpace,NButton,
 } from 'naive-ui'
+import {mypost} from "@/js/fetchapi.js"
 
 export default{
     components:{
@@ -55,13 +56,15 @@ export default{
         })
     },
     methods:{
-        saveChange(){
+        async saveChange(){
             if(storeAccount.getThisOrgAccountMsg().pass !==this.oldpassword){
                 naiveApi.notifyFail("旧密码输入错误")
                 return;
             }
-            console.log("save change password",this.oldpassword,this.newpassword);
-            
+            if(await storeAccount.changepassword(this.oldpassword,this.newpassword)){
+                naiveApi.notifySuccess("修改成功")
+                this.showChangePasswordModal=false;
+            }
         }
     },
 }

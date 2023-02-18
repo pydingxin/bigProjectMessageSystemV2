@@ -19,10 +19,10 @@ export default{
        NButton ,NInput,
    },
    mounted(){
+    //按钮发送事件，这里才启动
     eventBus.on("editAccount",orgkey=>{
-        console.log("in AccountEditPanel.vue mounted(),editAccount event,orgkey=",orgkey);
+        // console.log("in AccountEditPanel.vue mounted(),editAccount event,orgkey=",orgkey);
         let m=storeAccount.getOrgMsgByKey(orgkey);
-        console.log("in AccountEditPanel.vue, m=",m);
         [this.key,this.org,this.user,this.pass] = [m.key,m.org,m.name,m.pass]
         this.showThisPanel=true;
     })
@@ -40,28 +40,14 @@ export default{
     cancelEdit(){
         this.showThisPanel=!this.showThisPanel;
     },
-       async saveEdit(){
-            if(false===this.showThisPanel){
-                this.buttonContent= "确认添加"
-                this.showThisPanel=!this.showThisPanel;
-            }else{
-                //添加操作
-                let done= await this.confirmEditAccount();
-                if(done){
-                    naiveUiApi.notifySuccess("编辑成功")
-                    this.showThisPanel=!this.showThisPanel;
-                }else{
-                    naiveUiApi.notifySuccess("编辑失败")
-                }
-            }
-       },
-       async confirmEditAccount(){
-        //与api交互，执行
-            return new Promise(resolve =>{
-                console.log("Edit Account",this.org, this.user, this.pass);
-                setTimeout(()=>{resolve(true);},2000);
-            })
-       },
+    async saveEdit(){
+        if(await storeAccount.editAccount(this.key, this.org, this.user, this.pass)){
+            naiveUiApi.notifySuccess("编辑成功")
+            this.showThisPanel=!this.showThisPanel;
+            eventBus.emit("refreshAccountData") //更新store和视图
+        }
+    },
+
       
    }
 }

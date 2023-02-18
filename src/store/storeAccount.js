@@ -2,25 +2,66 @@ import {reactive} from 'vue'
 import {mypost} from "@/js/fetchapi.js"
 import eventBus from '@/js/mittEventBus.js'
 
-let msg=[
-    {key:3,org:"平邑县发改局",name:"pyxfgj",pass:"123456"},
-    {key:2,org:"平邑县财政局",name:"pyxczj",pass:"123456"},
-    {key:1,org:"平邑县教育局",name:"pyxjyj",pass:"123456"}
-]
-let AccountKeyMap = {};  //账号key的映射 方便查找   
-for(let idx=0;idx<msg.length;idx++) {
-    AccountKeyMap[msg[idx].key] = msg[idx];
-}
 
 let myAccount={} //登录时初始化
+
+async function validateAccount(name,pass){
+    //登录账号并返回真值，对接Login.vue
+    let ret= await mypost("/unauth/account/login",{name,pass})
+    if(ret.status ===true){
+        //登录成功
+        myAccount=ret.data //保存当前账号的信息
+        initAccountStore() //初始化所有账号信息和映射
+    }
+    return ret.status;
+}
+
 function getThisOrgAccountMsg(){
     //当前用户的账号信息
     return myAccount
 }
 
-console.log("AccountKeyMap",AccountKeyMap);
+async function changepassword(oldpass,newpass){
+    let ret= await mypost("/account/change_password",{
+        passold:oldpass,
+        passnew:newpass
+    })
+    if(ret.status){
+        myAccount.pass=newpass;
+        msg[myAccount.key].pass=newpass;
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function ThisAccountIsAdmin(){
+    //当前账号是否管理员
+    return myAccount.name==="admin"
+}
+
+let msg=[] //所有账号信息，登录成功在initAccountStore里初始化
+let AccountKeyMap = {};  //账号key的映射，initAccountStore里初始化
+
+async function initAccountStore(){
+    // 获取所有账号信息，如果是管理员则获取完整信息，普通用户获取keyorg信息
+    let ret={}
+    if(ThisAccountIsAdmin()){
+        ret= await mypost("/account/getall")
+    }else{
+        ret = await mypost("/account/allkeyorg")
+    }
+    if(ret.status===false)return;
+
+    msg=ret.data;
+    console.log("获取所有账号信息：",msg);
+    for(let idx=0;idx<msg.length;idx++) {
+        AccountKeyMap[msg[idx].key] = msg[idx];
+    }
+    console.log("所有账号信息映射：",AccountKeyMap);
+}
+
 function getAllOrgAccountMsg(){
-    // 所有账号信息
     return msg;
 }
 function getAccountNameByOrgKey(orgKey){
@@ -31,15 +72,15 @@ function getOrgMsgByKey(key){
     // 根据账号key返回账号信息
     return AccountKeyMap[key];
 }
-async function validateAccount(name,pass){
-    //登录账号并返回真值，对接Login.vue
-    let ret= await mypost("/unauth/account/login",{name,pass})
-    if(ret.status ===true){
-        myAccount=ret.data
-        console.log("myAccount",myAccount)
-    }
+
+async function createAccount(org,name,pass){
+    let ret= await mypost("/account/create",{name,pass,org})
     return ret.status;
-    
+}
+
+async function deleteAccount(key){
+    let ret= await mypost("/account/delete",{key})
+    return ret.status;
 }
 
 //监听Header.vue登出事件
@@ -47,9 +88,12 @@ eventBus.on("account_logout",()=>{
     mypost("/account/logout")
 })
 
-function ThisAccountIsAdmin(){
-    //当前账号是否管理员 Sider由此决定是否能跳转页面
-    return myAccount.name==="admin"
+async function editAccount(key,org,name,pass){
+    let ret= await mypost("/account/edit",{key,name,pass,org})
+    //成功，store状态改变，重新初始化
+    if(ret.status) await initAccountStore();
+    // 等待初始化完成，才能返回，让界面刷新
+    return ret.status;
 }
 
 export const storeAccount = reactive({
@@ -60,5 +104,10 @@ export const storeAccount = reactive({
     
     ThisAccountIsAdmin,
     validateAccount,
+    initAccountStore,
+    changepassword,
+    createAccount,
+    editAccount,
+    deleteAccount,
 })
   

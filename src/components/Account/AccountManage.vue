@@ -17,6 +17,7 @@ import AccountEditButton from './EditButton.vue'
 import EditPanel from './EditPanel.vue'
 import AddPanel from './AddPanel.vue'
 
+import eventBus from '@/js/mittEventBus.js'
 export default {
     emits:['pointerenter', 'pointerleave'],
     components: {
@@ -73,11 +74,17 @@ export default {
         }
     },
     mounted(){
-        this.allOrgMsgs = storeAccount.getAllOrgAccountMsg()
+        this.refreshAccountData()
+        let that=this
+        eventBus.on("refreshAccountData",async()=>{
+            // 任何增删改操作完成后，只要发送这个信号即可
+            await storeAccount.initAccountStore() //更新store
+            that.refreshAccountData() //更新视图
+        })
     },
     methods:{
-        addAccount(){
-            console.log("addAccount")
+        refreshAccountData(){
+            this.allOrgMsgs = storeAccount.getAllOrgAccountMsg()
         },
     },
 }

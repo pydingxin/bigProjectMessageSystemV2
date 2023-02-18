@@ -13,7 +13,9 @@
 <script>
 import { NPopconfirm,NButton } from 'naive-ui';
 import { toRaw } from 'vue'
+import eventBus from '@/js/mittEventBus.js'
 
+import{storeAccount} from '@/store/storeAccount.js'
 export default{
    props:['accountKeyProxy'],
    components:{
@@ -29,10 +31,11 @@ export default{
        }
    },
    methods:{
-       deleteAccount(){
+       async deleteAccount(){
            this.show=false;
-           console.log('删除账号 key/id=',this.accountKey);
-           // 由专门的store执行
+           if(await storeAccount.deleteAccount(this.accountKey)){
+                eventBus.emit("refreshAccountData")
+           }
        },
    }
 }
