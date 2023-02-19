@@ -42,6 +42,10 @@ export default{
     },
 
     async clickConfirmAdd(){
+        if(storeAccount.accountExists(this.org,this.user)){
+            naiveUiApi.notifyFail("该单位名或账号已存在")
+            return;
+        }
         if(await storeAccount.createAccount(this.org,this.user,this.pass)){
             naiveUiApi.notifySuccess("添加成功")
             this.showAddPanel=false;

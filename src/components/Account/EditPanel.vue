@@ -41,6 +41,10 @@ export default{
         this.showThisPanel=!this.showThisPanel;
     },
     async saveEdit(){
+        if(storeAccount.accountExists(this.org,this.user)){
+            naiveUiApi.notifyFail("该单位名或账号已存在")
+            return;
+        }
         if(await storeAccount.editAccount(this.key, this.org, this.user, this.pass)){
             naiveUiApi.notifySuccess("编辑成功")
             this.showThisPanel=!this.showThisPanel;

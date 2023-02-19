@@ -41,6 +41,13 @@ function ThisAccountIsAdmin(){
     return myAccount.name==="admin"
 }
 
+function accountExists(org,name){
+    // 检查要保存的账号是否已经存在，防止重复
+    if(msg.map(x=>x.org).includes(org)) return true;
+    if(msg.map(x=>x.name).includes(name)) return true;
+    return false;
+}
+
 let msg=[] //所有账号信息，登录成功在initAccountStore里初始化
 let AccountKeyMap = {};  //账号key的映射，initAccountStore里初始化
 
@@ -106,7 +113,7 @@ export const storeAccount = reactive({
     
     ThisAccountIsAdmin,
     constThisAccountIsAdmin,
-
+    accountExists,
     validateAccount,
     initAccountStore,
     changepassword,
