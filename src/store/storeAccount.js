@@ -68,7 +68,7 @@ function getAllOrgAccountMsg(){
 }
 function getAccountNameByOrgKey(orgKey){
     // 根据账号key返回名字
-    return AccountKeyMap[key].org;
+    return AccountKeyMap[orgKey].org;
 }
 function getOrgMsgByKey(key){
     // 根据账号key返回账号信息

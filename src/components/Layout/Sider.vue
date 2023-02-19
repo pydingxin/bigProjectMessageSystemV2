@@ -28,7 +28,7 @@ import {storeAccount} from "@/store/storeAccount.js"
      },
      data(){
          return{
-            showAdminMenu:true, //是否展示系统管理菜单
+     
             defaultExpandedKeys: [],
 
             menuOptions:[
@@ -38,7 +38,7 @@ import {storeAccount} from "@/store/storeAccount.js"
                     key: "MyProject" //这里的key就是<Content>中动态组件的名字
                 },
                 {
-                    show:storeAccount.constThisAccountIsAdmin,
+                    show:true,
                     label: "系统管理",
                     key: "xiTongGuanLi",
                     icon: renderIcon(SettingsOutline),

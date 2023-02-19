@@ -115,20 +115,48 @@
             <n-input v-model:value="form.xingxiang" :autosize="{minRows:8,maxRows:8}" type="textarea" />
         </n-card>
     </div>
-    {{ form }}
+
+    <n-divider />
+    <n-text type="warning">项目信息</n-text>
+    <n-table striped >
+    <thead>
+      <tr><th>条目</th><th>内容</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>序号</td>      <td>{{staticMsg.index}}</td></tr>
+      <tr><td>项目名称</td>  <td>{{staticMsg.name}}</td></tr>
+      <tr><td>项目性质</td>  <td>{{staticMsg.xingzhi}}</td></tr>
+      <tr><td>项目级别</td>  <td>{{staticMsg.jibie}}</td></tr>
+      <tr><td>项目领域</td>  <td>{{staticMsg.lingyu}}</td></tr>
+      <tr><td>责任县领导</td><td>{{staticMsg.leader}}</td></tr>
+      <tr><td>责任单位</td>  <td>{{dutyOrgNames}}</td></tr>
+      <tr><td>联系人</td>    <td>{{staticMsg.contact}}</td></tr>
+      <tr><td>内容规模</td>  <td>{{staticMsg.neroguimo}}</td></tr>
+      <tr><td>建设单位</td>  <td>{{staticMsg.builder}}</td></tr>
+      <tr><td>建设地点</td>  <td>{{staticMsg.place}}</td></tr>
+      <tr><td>开工时间</td>  <td>{{staticMsg.kaigong}}</td></tr>
+      <tr><td>竣工时间</td>  <td>{{staticMsg.jungong}}</td></tr>
+      <tr><td>资金来源</td>  <td>{{staticMsg.costfrom}}</td></tr>
+      <tr><td>总计划投资[万元]</td><td>{{staticMsg.allcost}}</td></tr>
+      <tr><td>往年已投资[万元]</td><td>{{staticMsg.hadcost}}</td></tr>
+      <tr><td>今年计划投资[万元]</td><td>{{staticMsg.yearcost}}</td></tr>
+      <tr><td>今年建设计划</td><td>{{staticMsg.yearplan}}</td></tr>
+      <tr><td>今年节点目标</td><td>{{staticMsg.yearnode}}</td></tr>
+    </tbody>
+  </n-table>
 </template>
 
 <script>
 import eventBus from '@/js/mittEventBus.js'
 import naiveApi from '@/js/naiveUiApi.js'
 import { ArrowBack,CloudUpload,Checkbox} from "@vicons/ionicons5";
-
 import {mypost} from "@/js/fetchapi.js"
 import { 
-    NButton,NIcon,
+    NButton,NIcon,NDivider,NTable,
     NH2,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,NCard,
  } from 'naive-ui';
 import {storeProject} from '@/store/storeProject.js';
+import{storeAccount} from '@/store/storeAccount.js'
 
 /* 信息样板
 {
@@ -146,8 +174,8 @@ import {storeProject} from '@/store/storeProject.js';
 */
 export default{
     components:{
-        ArrowBack,Checkbox,CloudUpload,
-        NButton,NIcon,NCard,
+        ArrowBack,Checkbox,CloudUpload,NDivider,
+        NButton,NIcon,NCard,NTable,
         NH2,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,
     },
     data(){
@@ -159,6 +187,7 @@ export default{
                 {label: "已开始",value: "inited"},
                 {label: "完成",value: "done"},
             ],
+            dutyOrgNames:[],
 
             //被修改的动态信息
             form:{
@@ -180,7 +209,7 @@ export default{
         eventBus.on("openProjectDynamicForm",async function(projectkey){
             console.log("请求静态信息, projectkey=",projectkey);
             that.staticMsg = await storeProject.getProjectStaticMsgByKey(projectkey); 
-
+            that.dutyOrgNames = that.staticMsg.dutyorg.map(storeAccount.getAccountNameByOrgKey)
             console.log("请求动态信息, projectkey=",projectkey);
             let tmp=  await storeProject.getProjectDynamicMsgByKey(projectkey); 
             // 如果是个json，就把json解出来

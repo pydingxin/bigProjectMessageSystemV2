@@ -160,11 +160,11 @@ export default{
         this.form={}; //清空上次编辑时留存的数据
         this.options= [];
       },
-      editProject(){
+      async editProject(){
         // 设置界面
         console.log("editProject",this.eventMsg);
         this.modalTitle= `编辑项目`
-        this.form= storeProject.getProjectStaticMsgByKey(this.eventMsg.projectKey)
+        this.form= await storeProject.getProjectStaticMsgByKey(this.eventMsg.projectKey)
         this.options= storeAccount.getAllOrgAccountMsg().map(org=>({value:org.key,label:org.org}));
       },
     },

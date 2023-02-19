@@ -1,7 +1,8 @@
+export let backendApiUrl="http://localhost/api"
 // 在这里统一输出错误信息，在各自页面上输出成功信息
 export function mypost(api, jsondata){
     return new Promise(res=>{
-        fetch("http://localhost/api"+api,{
+        fetch(backendApiUrl+api,{
             method:'POST',
             body:JSON.stringify(jsondata),
             mode: 'cors',
