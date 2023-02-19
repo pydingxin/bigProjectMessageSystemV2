@@ -144,7 +144,7 @@ mypost("/dynamicmsg/getbyid",{
     key:2,
 })
 {data:{
-    Projectid:2
+    key:2
     guihua:""
     huanping:""
     lixiang:"{\"msg\":\"立项已完成\",\"status\":\"done\"}"

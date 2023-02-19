@@ -57,20 +57,20 @@ export default{
 
         let that = this;
         eventBus.on("openProjectDynamicForm",function(projectkey){
-            console.log("MyProject.vue got event openProjectDynamicForm, projectkey=",projectkey);
+            // console.log("MyProject.vue got event openProjectDynamicForm, projectkey=",projectkey);
             that.showSubmitPage=true;
         });
         eventBus.on("closeProjectDynamicForm",function(){
-            console.log("MyProject.vue got event closeProjectDynamicForm");
+            // console.log("MyProject.vue got event closeProjectDynamicForm");
             that.showSubmitPage=false;
         })
         
         eventBus.on("openProjectMediaPage",function(projectkey){
-            console.log("MyProject.vue got event openProjectMediaPage, projectkey=",projectkey);
+            // console.log("MyProject.vue got event openProjectMediaPage, projectkey=",projectkey);
             that.showMediaPage=true;
         });
         eventBus.on("closeProjectMediaPage",function(){
-            console.log("MyProject.vue got event closeProjectMediaPage");
+            // console.log("MyProject.vue got event closeProjectMediaPage");
             that.showMediaPage=false;
         })
         

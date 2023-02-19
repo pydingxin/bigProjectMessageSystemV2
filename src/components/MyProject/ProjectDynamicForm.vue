@@ -115,6 +115,7 @@
             <n-input v-model:value="form.xingxiang" :autosize="{minRows:8,maxRows:8}" type="textarea" />
         </n-card>
     </div>
+    {{ form }}
 </template>
 
 <script>
@@ -122,6 +123,7 @@ import eventBus from '@/js/mittEventBus.js'
 import naiveApi from '@/js/naiveUiApi.js'
 import { ArrowBack,CloudUpload,Checkbox} from "@vicons/ionicons5";
 
+import {mypost} from "@/js/fetchapi.js"
 import { 
     NButton,NIcon,
     NH2,NH3,NH6,NText,NSelect,NSpace,NInput,NInputNumber,NCard,
@@ -150,49 +152,65 @@ export default{
     },
     data(){
         return{
-            dynamicform:{},
             staticMsg:{},
             value:"",
             selectOptions: [
-                {label: "未开工",value: "uninit"},
-                {label: "已开工",value: "inited"},
-                {label: "已完成",value: "done"},
+                {label: "未开始",value: "uninit"},
+                {label: "已开始",value: "inited"},
+                {label: "完成",value: "done"},
             ],
 
             //被修改的动态信息
             form:{
-                'key':1,
-                "lixiang":{status:"done",msg:"立项完成"},
-                "yongdi":{status:"uninit",msg:"项目2没有地了！"},
-                "guihua":{status:"inited",msg:"已开始"},
-                "huanping":{status:"done",msg:"环评完成"},
-                "nengping":{status:"done",msg:"能评完成"},
-                "xukezheng":{status:"done",msg:"许可证完成"},
-                
-                "xingxiang":"形象进度呵呵了",
-                "yearcosted":500,
+                'key':0,
+                "lixiang":{status:"",msg:""},
+                "yongdi":{status:"",msg:""},
+                "guihua":{status:"",msg:""},
+                "huanping":{status:"",msg:""},
+                "nengping":{status:"",msg:""},
+                "xukezheng":{status:"",msg:""},
+                "xingxiang":"",
+                "yearcosted":0,
             },
         }
     },
     mounted(){
         let that=this;
-        eventBus.on("openProjectDynamicForm",function(projectkey){
-            console.log("ProjectDynamicForm.vue got event openProjectDynamicForm, projectkey=",projectkey);
-            that.dynamicform = storeProject.getProjectDynamicMsgByKey(projectkey); 
-            that.form = that.dynamicform;
-            that.staticMsg = storeProject.getProjectStaticMsgByKey(projectkey); 
+        // 按钮触发事件
+        eventBus.on("openProjectDynamicForm",async function(projectkey){
+            console.log("请求静态信息, projectkey=",projectkey);
+            that.staticMsg = await storeProject.getProjectStaticMsgByKey(projectkey); 
+
+            console.log("请求动态信息, projectkey=",projectkey);
+            let tmp=  await storeProject.getProjectDynamicMsgByKey(projectkey); 
+            // 如果是个json，就把json解出来
+            if(!!tmp.lixiang)   that.form.lixiang = JSON.parse(tmp.lixiang);
+            if(!!tmp.yongdi)    that.form.yongdi = JSON.parse(tmp.yongdi);
+            if(!!tmp.guihua)    that.form.guihua = JSON.parse(tmp.guihua);
+            if(!!tmp.huanping)  that.form.huanping = JSON.parse(tmp.huanping);
+            if(!!tmp.nengping)  that.form.nengping = JSON.parse(tmp.nengping);
+            if(!!tmp.xukezheng) that.form.xukezheng = JSON.parse(tmp.xukezheng);
+            that.form.yearcosted = tmp.yearcosted;
+            that.form.xingxiang = tmp.xingxiang;
+            that.form.key = tmp.key;
         });
     },
     methods:{
         closeProjectDynamicForm(){
             eventBus.emit('closeProjectDynamicForm')
         },
-        saveItem(item){
-            if(item==="yearcosted" && this.form.yearcosted==null){
+        async saveItem(item){
+            let that=this;
+            if(item==="yearcosted" && that.form.yearcosted==null){
                 naiveApi.notifyFail("费用不能为空")
                 return;
             }
-            console.log("saveItem: " + item)
+            let ret = await mypost("/dynamicmsg/submit",{
+                key: that.form.key,
+                field:item,
+                content:that.form[item],
+            })
+            if(ret.status) naiveApi.notifySuccess("保存成功")
         },
     }
 }

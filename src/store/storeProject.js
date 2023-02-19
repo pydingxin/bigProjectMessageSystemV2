@@ -60,14 +60,16 @@ function getAllProjectList(){
     return allProjectList;
 }
 
-function getProjectStaticMsgByKey(projectkey){
-    // 每次应从后端请求，获取项目的静态信息
-    return allProjectStaticMsg.find(one=>one.key===projectkey)
+async function getProjectStaticMsgByKey(projectkey){
+    // 每次应从后端请求，获取项目的静态信息，给普通用户看项目信息
+    let ret = await mypost("/staticmsg/getbykey",{key:projectkey})
+    if(ret.status) return ret.data;
 }
 
-function getProjectDynamicMsgByKey(projectkey){
+async function getProjectDynamicMsgByKey(projectkey){
     // 每次应从后端请求，获取项目的动态信息
-    return allProjectDynamicMsg.find(one=>one.key===projectkey);
+    let ret = await mypost("/dynamicmsg/getbyid",{ key:projectkey })
+    if(ret.status) return ret.data;
 }
 
 function getProjectKeyListByDutyorgKey(orgkey){ 

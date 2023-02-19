@@ -35,6 +35,7 @@ async function changepassword(oldpass,newpass){
     }
 }
 
+let constThisAccountIsAdmin= false;
 function ThisAccountIsAdmin(){
     //当前账号是否管理员
     return myAccount.name==="admin"
@@ -47,6 +48,7 @@ async function initAccountStore(){
     // 获取所有账号信息，如果是管理员则获取完整信息，普通用户获取keyorg信息
     let ret={}
     if(ThisAccountIsAdmin()){
+        constThisAccountIsAdmin=true;
         ret= await mypost("/account/getall")
     }else{
         ret = await mypost("/account/allkeyorg")
@@ -103,6 +105,8 @@ export const storeAccount = reactive({
     getAccountNameByOrgKey,
     
     ThisAccountIsAdmin,
+    constThisAccountIsAdmin,
+
     validateAccount,
     initAccountStore,
     changepassword,
