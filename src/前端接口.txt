@@ -191,3 +191,7 @@ data:[
     {Projectid: 3, Accountid: 1, Filename: 'vite.config.ts', time: '0001-01-01T00:00:00Z'}
 ]
 # 获取一个项目的文件信息
+
+# -----------------------------------
+mypost("/media/download/{projectid}/{filename}")
+# 下载一个文件

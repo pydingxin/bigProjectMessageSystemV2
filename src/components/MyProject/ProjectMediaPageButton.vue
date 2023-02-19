@@ -1,5 +1,5 @@
 <template>
-    <n-button @click="clickBtn">影像管理</n-button>
+    <n-button @click="clickBtn">文件管理</n-button>
 </template>
 
 <script>

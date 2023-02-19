@@ -41,7 +41,7 @@ async function initStoreProject(){
     if(false===ret.status)return;
     allProjectStaticMsg= ret.data;
 
-    console.log("allProjectStaticMsg=",allProjectStaticMsg);
+    // console.log("allProjectStaticMsg=",allProjectStaticMsg);
 
     allProjectList= allProjectStaticMsg.map(pro=>({
         "key":pro.key,

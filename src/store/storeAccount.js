@@ -56,11 +56,11 @@ async function initAccountStore(){
     if(ret.status===false)return;
 
     msg=ret.data;
-    console.log("获取所有账号信息：",msg);
+    // console.log("获取所有账号信息：",msg);
     for(let idx=0;idx<msg.length;idx++) {
         AccountKeyMap[msg[idx].key] = msg[idx];
     }
-    console.log("所有账号信息映射：",AccountKeyMap);
+    // console.log("所有账号信息映射：",AccountKeyMap);
 }
 
 function getAllOrgAccountMsg(){
