@@ -90,7 +90,8 @@ export default{
             columns:[
                 {
                     title: "项目序号",
-                    key: "index"
+                    key: "index",
+                    sorter: (row1, row2) => row1.index-row2.index
                 },
                 {
                     title: "项目名",
