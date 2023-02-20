@@ -25,7 +25,7 @@
     
         </div>
         <div class="horizon">
-            <span class="width4" >建设领域</span>
+            <span class="width4" >所属领域</span>
             <n-input class="minwidth5" v-model:value="form.lingyu" type="text" placeholder="建设领域" />
         </div>
       </div>
@@ -44,7 +44,7 @@
     </div>
 
 
-      <n-divider class="txt" title-placement="left">整体计划</n-divider>
+      <n-divider class="txt" title-placement="left">基本情况</n-divider>
       <span class="width7" style="color:gray" >主要内容和规模</span>
       <n-input class="minwidth5" v-model:value="form.neroguimo" type="textarea" placeholder="主要内容和规模" />
       <div>
@@ -70,7 +70,7 @@
     <div class="width1" style="min-height:40rem;border-left: 1px solid green;"></div>
     
     <div id="right">
-      <n-divider class="txt" title-placement="left">资金回顾</n-divider>
+      <n-divider class="txt" title-placement="left">投资情况</n-divider>
       <div class="horizon">
         <span class="width4" >资金来源</span>
         <n-input class="minwidth5" v-model:value="form.costfrom" type="text" placeholder="资金来源" /> &nbsp &nbsp &nbsp

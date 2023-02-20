@@ -127,7 +127,7 @@
       <tr><td>项目名称</td>  <td>{{staticMsg.name}}</td></tr>
       <tr><td>项目性质</td>  <td>{{staticMsg.xingzhi}}</td></tr>
       <tr><td>项目级别</td>  <td>{{staticMsg.jibie}}</td></tr>
-      <tr><td>项目领域</td>  <td>{{staticMsg.lingyu}}</td></tr>
+      <tr><td>所属领域</td>  <td>{{staticMsg.lingyu}}</td></tr>
       <tr><td>责任县领导</td><td>{{staticMsg.leader}}</td></tr>
       <tr><td>责任单位</td>  <td>{{dutyOrgNames}}</td></tr>
       <tr><td>联系人</td>    <td>{{staticMsg.contact}}</td></tr>
