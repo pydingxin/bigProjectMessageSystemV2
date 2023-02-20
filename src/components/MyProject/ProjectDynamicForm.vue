@@ -210,6 +210,7 @@ export default{
             console.log("请求静态信息, projectkey=",projectkey);
             that.staticMsg = await storeProject.getProjectStaticMsgByKey(projectkey); 
             that.dutyOrgNames = that.staticMsg.dutyorg.map(storeAccount.getAccountNameByOrgKey)
+            
             console.log("请求动态信息, projectkey=",projectkey);
             let tmp=  await storeProject.getProjectDynamicMsgByKey(projectkey); 
             // 如果是个json，就把json解出来

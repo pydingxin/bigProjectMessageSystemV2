@@ -54,9 +54,13 @@ export default{
     methods:{
         async refreshProjectMsg(){
             //每行的key都是项目key，可以用这个key删除项目
+            console.log("ProjectManage重置storeProject和视图")
+
             await storeProject.initStoreProject() //重置store
             this.tableData = storeProject.getAllProjectList() //重置本模块数据
             this.tableDataOnShow = this.tableData; //重置视图
+
+            console.log("视图数据：",this.tableData)
         },
         addProject(){
             console.log("add project")

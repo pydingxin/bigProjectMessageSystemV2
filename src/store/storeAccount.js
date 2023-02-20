@@ -67,7 +67,7 @@ async function initAccountStore(){
     for(let idx=0;idx<msg.length;idx++) {
         AccountKeyMap[msg[idx].key] = msg[idx];
     }
-    // console.log("所有账号信息映射：",AccountKeyMap);
+    console.log("所有账号信息：",AccountKeyMap);
 }
 
 function getAllOrgAccountMsg(){

@@ -78,8 +78,12 @@ export default {
         let that=this
         eventBus.on("refreshAccountData",async()=>{
             // 任何增删改操作完成后，只要发送这个信号即可
+            console.log("AccountManage重置storeAccount和视图")
+            
             await storeAccount.initAccountStore() //更新store
             that.refreshAccountData() //更新视图
+            
+            console.log("视图数据：",this.allOrgMsgs)
         })
     },
     methods:{

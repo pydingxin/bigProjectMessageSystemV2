@@ -130,6 +130,8 @@ export default{
         that.eventMsg = msg;
         msg.type === "edit" && that.editProject();
         msg.type === "add" && that.addProject();
+        
+        this.options= storeAccount.getAllOrgAccountMsg().map(org=>({value:org.key,label:org.org})); //设置下拉菜单的单位显示
         that.showModal = true;
       })
       
@@ -158,14 +160,12 @@ export default{
         console.log("addProject",this.eventMsg);
         this.modalTitle= "创建项目"
         this.form={}; //清空上次编辑时留存的数据
-        this.options= [];
       },
       async editProject(){
         // 设置界面
         console.log("editProject",this.eventMsg);
         this.modalTitle= `编辑项目`
         this.form= await storeProject.getProjectStaticMsgByKey(this.eventMsg.projectKey)
-        this.options= storeAccount.getAllOrgAccountMsg().map(org=>({value:org.key,label:org.org}));
       },
     },
     data(){

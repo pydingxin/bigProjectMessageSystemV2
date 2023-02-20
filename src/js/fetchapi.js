@@ -1,4 +1,5 @@
-export let backendUrl = "http://localhost"
+// export let backendUrl = "http://localhost:8080"
+export let backendUrl = "."
 
 export let backendApiUrl = backendUrl+"/api"
 

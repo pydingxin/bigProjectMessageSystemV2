@@ -96,9 +96,10 @@ export default{
     },
     methods:{
         async refreshView(){
+            console.log("MyProject重置数据和视图")
             let myAccount = storeAccount.getThisOrgAccountMsg();
             this.tableData = await storeProject.getProjectListByDutyorgKey(myAccount.key);
-            console.log("my projects: ",this.tableData)
+            console.log("视图数据: ",this.tableData)
             this.tableDataOnShow = this.tableData;
         },
 
