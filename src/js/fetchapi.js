@@ -1,3 +1,4 @@
+import {notifyFail} from './fetchapi.js'
 export let backendUrl = "http://localhost"
 
 export let backendApiUrl = backendUrl+"/api"
@@ -15,7 +16,7 @@ export function mypost(api, jsondata){
         .then(data => {
             // console.log("后端返回 ",data)
             if(data.status===false){
-                alert(data.msg)
+                notifyFail(data.msg)
             }
             res(data)
             

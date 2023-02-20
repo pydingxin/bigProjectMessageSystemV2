@@ -1,7 +1,8 @@
 <template>
       <div class="fullscreen_wrapper">
-        <div>{{ fullscreen }}</div>
-        <button type="button" @click="toggle" >切换全屏</button>
+        手机端尚未完善，请用电脑登录
+        <!-- <div>{{ fullscreen }}</div>
+        <button type="button" @click="toggle" >切换全屏</button> -->
       </div>
       
 </template>
