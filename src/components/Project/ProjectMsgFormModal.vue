@@ -132,6 +132,7 @@ export default{
         msg.type === "add" && that.addProject();
         
         this.options= storeAccount.getAllOrgAccountMsg().map(org=>({value:org.key,label:org.org})); //设置下拉菜单的单位显示
+        console.log("ProjectMsgFormModal: org msg=", this.options)
         that.showModal = true;
       })
       

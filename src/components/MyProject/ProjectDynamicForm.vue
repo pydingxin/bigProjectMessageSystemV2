@@ -207,11 +207,15 @@ export default{
         let that=this;
         // 按钮触发事件
         eventBus.on("openProjectDynamicForm",async function(projectkey){
-            console.log("请求静态信息, projectkey=",projectkey);
-            that.staticMsg = await storeProject.getProjectStaticMsgByKey(projectkey); 
-            that.dutyOrgNames = that.staticMsg.dutyorg.map(storeAccount.getAccountNameByOrgKey)
             
-            console.log("请求动态信息, projectkey=",projectkey);
+            console.log("ProjectDynamicForm 请求静态信息, projectkey=",projectkey);
+            that.staticMsg = await storeProject.getProjectStaticMsgByKey(projectkey); 
+
+            console.log("projectkey=",projectkey, "staticMsg=",that.staticMsg)
+            that.dutyOrgNames = that.staticMsg.dutyorg.map(storeAccount.getAccountNameByOrgKey)
+            console.log("dutyOrgNames=",dutyOrgNames)
+
+            console.log("ProjectDynamicForm 请求动态信息, projectkey=",projectkey);
             let tmp=  await storeProject.getProjectDynamicMsgByKey(projectkey); 
             // 如果是个json，就把json解出来
             if(!!tmp.lixiang)   that.form.lixiang = JSON.parse(tmp.lixiang);
