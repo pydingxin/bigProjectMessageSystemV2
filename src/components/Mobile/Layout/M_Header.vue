@@ -59,7 +59,7 @@ export default {
         eventBus.emit("toggleFullScreen")
     },
     onSelect(action){
-        alert(action.text);
+        if(action.text=="菜单1") eventBus.emit("view1");
     },
   },
   mounted(){

@@ -7,6 +7,7 @@
 
 <script>
 import { Button } from 'vant';
+import eventBus from '@/js/mittEventBus.js'
 
 export default {
   components: {
@@ -21,7 +22,9 @@ export default {
   methods:{
 
   },
-      
+  mounted(){
+    eventBus.on("view1",()=>{alert("content got view1")})
+  }
 
 }
 </script>
