@@ -10,26 +10,11 @@
     </template>
 
     <template #right>
-        <van-icon  @click="openFullScreen" v-show="!isfullscreen" color="#1989fa"  size="20"  name="expand-o" />
-        <van-icon  @click="closeFullScreen" v-show="isfullscreen" color="#1989fa"  size="20"  name="shrink" />
+        <van-icon  @click="toggleFullScreen" color="#1989fa"  size="20"  name="expand-o" />
     </template>
     </van-nav-bar>
 </div>
-<!-- <div id="container">
 
-    <div id="left">
-        &nbsp;
-
-    </div>
-
-    <div id="right">
-        <van-button size="small"  plain round type="default" @click="toggleFullScreen">
-            <van-icon name="browsing-history-o" /> 全屏
-        </van-button>
-        &nbsp;
-   
-    </div>
-</div> -->
 
 </template>
 
@@ -42,7 +27,6 @@ export default {
   },
   data() {
       return{
-        isfullscreen:false,
         actions : [
             { text: '菜单1' },
         ],
@@ -50,14 +34,10 @@ export default {
   },
 
   methods:{
-    openFullScreen(){
-        this.isfullscreen=true;
+    toggleFullScreen(){
         eventBus.emit("toggleFullScreen")
     },
-    closeFullScreen(){
-        this.isfullscreen=false;
-        eventBus.emit("toggleFullScreen")
-    },
+
     onSelect(action){
         if(action.text=="菜单1") eventBus.emit("view1");
     },

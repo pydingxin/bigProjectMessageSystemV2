@@ -23,7 +23,7 @@ export default {
 
   },
   mounted(){
-    eventBus.on("view1",()=>{alert("content got view1")})
+    eventBus.on("view1",()=>{alert("菜单1 开发中")})
   }
 
 }

@@ -1,7 +1,7 @@
 // export let backendUrl = "http://localhost:8080" //本机电脑调试
-export let backendUrl = "http://10.178.64.17:8080" //局域网手机调试
+// export let backendUrl = "http://10.178.64.17:8080" //局域网手机调试
 
-// export let backendUrl = "." //阿里云
+export let backendUrl = "." //阿里云
 
 export let backendApiUrl = backendUrl+"/api"
 
