@@ -1,7 +1,7 @@
 <template>
 
 <div id="container">
-   <div>欢迎来到平邑县项目信息报送系统</div> 
+   <div>{{ content }}</div> 
 </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   },
   data() {
       return{
-         
+         content:"欢迎来到平邑县项目信息报送系统",
       }
   },
 
@@ -23,7 +23,8 @@ export default {
 
   },
   mounted(){
-    eventBus.on("view1",()=>{alert("菜单1 开发中")})
+    let that=this;
+    eventBus.on("view1",()=>{that.content="菜单1"})
   }
 
 }
