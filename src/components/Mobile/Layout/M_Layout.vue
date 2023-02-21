@@ -1,31 +1,43 @@
 <template>
       <div class="fullscreen_wrapper">
-        手机端尚未完善，请用电脑登录
-        <!-- <div>{{ fullscreen }}</div>
-        <button type="button" @click="toggle" >切换全屏</button> -->
+        <M_Header />
+        <M_Content/>
+
       </div>
       
 </template>
 
 <script>
+
+import M_Header from "./M_Header.vue"
+import M_Content from "./M_Content.vue"
 import { api as fullscreen } from 'vue-fullscreen'
+import eventBus from '@/js/mittEventBus.js'
 export default {
+    components: {
+        M_Header,M_Content,
+    },
     data() {
         return{
-            fullscreen: false,
+            isfullscreen: false,
         }
     },
-
+    mounted(){
+        let that=this;
+        eventBus.on("toggleFullScreen",()=>{
+            that.toggle();
+        })
+    },
     methods:{
         async toggle(){
-        let state = this;
-        fullscreen.toggle(document.querySelector('.fullscreen_wrapper'), {
-            teleport: true,
-            callback: (isFullscreen) => {
-            state.fullscreen = isFullscreen
-            },
-        })
-        }  
+            let that = this;
+            fullscreen.toggle(document.querySelector('.fullscreen_wrapper'), {
+                teleport: true,
+                callback: (isFullscreen) => {
+                    that.isfullscreen = isFullscreen
+                },
+            })
+        },  
     },
         
 
@@ -36,8 +48,10 @@ export default {
 .fullscreen_wrapper{
     background-color: white;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    width:100vw;
+    height:100vh;
 
 }
 </style>
